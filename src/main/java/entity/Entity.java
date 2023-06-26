@@ -116,6 +116,14 @@ if(gp.player.invincible==false){
             }
             spriteCounter = 0;
         }
+
+        if (invincible == true) {
+            invincibleCounter++;
+            if (invincibleCounter > 40) {
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
     public void draw(Graphics2D g2) {
@@ -160,7 +168,12 @@ if(gp.player.invincible==false){
                     }
                     break;
             }
+
+            if(invincible==true){
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.4f));
+            }
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
         }
     }
 

@@ -23,7 +23,31 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        if (gp.gameState == gp.playState) {
+
+        //title state
+        if(gp.gameState==gp.titleState){
+            if (code == KeyEvent.VK_W) {
+                gp.ui.commandNumber--;
+            }
+            if (code == KeyEvent.VK_S) {
+                gp.ui.commandNumber++;
+            }
+            if(code==KeyEvent.VK_ENTER){
+                if(gp.ui.commandNumber==0){
+                    gp.gameState=gp.playState;
+                    gp.playMusic(0);
+                }
+                if(gp.ui.commandNumber==1){
+                    //later
+                }
+                if(gp.ui.commandNumber==2){
+                    System.exit(0);
+                }
+            }
+        }
+       //PLAY STATE
+
+       else if (gp.gameState == gp.playState) {
             if (code == KeyEvent.VK_W) {
                 upPressed = true;
             }
@@ -67,27 +91,7 @@ public class KeyHandler implements KeyListener {
             }
 
         }
-        //title state
-        if(gp.gameState==gp.titleState){
-            if (code == KeyEvent.VK_W) {
-                gp.ui.commandNumber--;
-            }
-            if (code == KeyEvent.VK_S) {
-               gp.ui.commandNumber++;
-            }
-            if(code==KeyEvent.VK_ENTER){
-                if(gp.ui.commandNumber==0){
-                    gp.gameState=gp.playState;
-                    gp.playMusic(0);
-                }
-                if(gp.ui.commandNumber==1){
-                    //later
-                }
-                if(gp.ui.commandNumber==2){
-                    System.exit(0);
-                }
-            }
-        }
+
 
 
     }

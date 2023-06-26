@@ -214,9 +214,13 @@ if(attacking==true){
     }
     public void damageMonster(int i){
         if(i!=999){
-            System.out.println("hit");
-        }else{
-            System.out.println("miss");
+ if(gp.monster[i].invincible==false){
+     gp.monster[i].life-=1;
+     gp.monster[i].invincible=true;
+     if(gp.monster[i].life<=0){
+         gp.monster[i]=null;
+     }
+ }
         }
     }
 
