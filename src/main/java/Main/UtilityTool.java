@@ -12,6 +12,4 @@ public class UtilityTool {
         g2.dispose();
         return scaleImage;
     }
-
-    ;
 }

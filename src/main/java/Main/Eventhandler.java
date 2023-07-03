@@ -93,6 +93,7 @@ prevEventY=gp.player.worldY;
     public void healingPool(int row,int col ,int gameState) {
         if (gp.keyH.enterPressed == true) {
             gp.gameState = gameState;
+            gp.player.attackCanceled=true;
             gp.ui.currentDialogue = "you drink water";
             gp.player.life = gp.player.maxLife;
         }

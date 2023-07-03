@@ -56,7 +56,8 @@ public class NPC_Wizard extends Entity {
         dialogues[0] = "Cześć!";
         dialogues[1] = "Jak się masz?";
         dialogues[2] = "Co u ciebie słychać?";
-        dialogues[4] = "Co u ciebioooo ooooooooooo ooooooooooo ooooo \noooooo ooooooo oooo ooooo ooooo ooooo \noooo o o oooooe słychać?";
+        dialogues[4] = "Co u ciebioooo ooooooooooo ooooooooooo \noooooo ooooooo oooo ooooo ooooo " +
+                " \noooo o o oooooe słychać?";
     }
 
 

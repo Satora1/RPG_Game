@@ -14,24 +14,26 @@ public class Entity {
     public int speed;
 
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, main;
-    public  BufferedImage Aup,Adown,Aleft,Aright;
+    public BufferedImage Aup, Adown, Aleft, Aright;
 
     public int spriteCounter = 0;
 
 
-  public Rectangle attackArea=new Rectangle(0,0,0,0);
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
-//STATE
-   public int worldX, worldY;
+    //STATE
+    public int worldX, worldY;
     public String direction = "down";
     public int spritNum = 1;
     public int dialogueIndex = 0;
     public boolean collisionOn = false;
     public boolean invincible = false;
-    public  boolean attacking=false;
-
-
-
+    public boolean attacking = false;
+    public boolean alive = true;
+    public boolean dying = false;
+    public int dyingCounter = 0;
+    boolean hpBarOn = false;
+    int hpBarCounter=0;
 
 
     public int solidAreaDefaultX, solidAreaDefaultY;
@@ -56,7 +58,9 @@ public class Entity {
 
     public void setAction() {
     }
+public void damageReaction(){
 
+}
     public void speak() {
         switch (gp.player.direction) {
             case "up":
@@ -84,11 +88,11 @@ public class Entity {
         gp.checker.checkEntity(this, gp.monster);
         boolean contactPlayer = gp.checker.checkPlayer(this);
         if (this.type == 2 && contactPlayer == true) {
-if(gp.player.invincible==false){
-    //we can give damage
-    gp.player.life-=1;
-    gp.player.invincible=true;
-}
+            if (gp.player.invincible == false) {
+                //we can give damage
+                gp.player.life -= 1;
+                gp.player.invincible = true;
+            }
         }
         //if colison false can move
         if (collisionOn == false) {
@@ -169,20 +173,79 @@ if(gp.player.invincible==false){
                     break;
             }
 
-            if(invincible==true){
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.4f));
+            //MONSTER HP
+            if (type == 2 && hpBarOn==true) {
+                double onScale = (double) gp.tileSize / maxLife;
+                double hpBarValue = onScale * life;
+
+                g2.setColor(Color.gray);
+                g2.fillRect(screenX - 1, screenY - 16, gp.tileSize + 2, 12);
+                g2.setColor(Color.red);
+                g2.fillRect(screenX, screenY - 15, (int) hpBarValue, 10);
+                hpBarCounter++;
+                if(hpBarCounter>600){
+                    hpBarCounter=0;
+                    hpBarOn=false;
+                }
+            }
+
+
+            if (invincible == true) {
+                hpBarOn=true;
+                hpBarCounter=0;
+                ChangeAlfa(g2,0.4F);
+            }
+            if (dying == true) {
+                dyingAnimation(g2);
             }
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
+            ChangeAlfa(g2,1F);
         }
     }
 
-    public BufferedImage setup(String imagePath,int width,int hight) {
+    public void dyingAnimation(Graphics2D g2) {
+        dyingCounter++;
+        int i = 5;
+        if (dyingCounter <= i) {
+            ChangeAlfa(g2, 0f);
+        }
+        if (dyingCounter > i && dyingCounter <= i * 2) {
+            ChangeAlfa(g2, 1f);
+        }
+        if (dyingCounter > i * 2 && dyingCounter <= i * 3) {
+            ChangeAlfa(g2, 0f);
+        }
+        if (dyingCounter > i * 3 && dyingCounter <= i * 4) {
+            ChangeAlfa(g2, 1f);
+        }
+        if (dyingCounter > i * 4 && dyingCounter <= i * 5) {
+            ChangeAlfa(g2, 0f);
+        }
+        if (dyingCounter > i * 5 && dyingCounter <= i * 6) {
+            ChangeAlfa(g2, 1f);
+        }
+        if (dyingCounter > i * 6 && dyingCounter <= i * 7) {
+            ChangeAlfa(g2, 0f);
+        }
+        if (dyingCounter > i * 7 && dyingCounter <= i * 8) {
+            ChangeAlfa(g2, 1f);
+        }
+        if (dyingCounter > i * 8) {
+            dying = false;
+            alive = false;
+        }
+    }
+
+    public void ChangeAlfa(Graphics2D g2, float alphaValue) {
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
+    }
+
+    public BufferedImage setup(String imagePath, int width, int hight) {
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try {
             image = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
-            image = uTool.scaleImage(image, width,hight);
+            image = uTool.scaleImage(image, width, hight);
         } catch (IOException e) {
             e.printStackTrace();
         }
