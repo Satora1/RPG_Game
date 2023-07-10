@@ -4,6 +4,7 @@ import Main.GamePanel;
 import Main.UtilityTool;
 
 import javax.imageio.ImageIO;
+import javax.lang.model.UnknownEntityException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class Entity {
     public boolean dying = false;
     public int dyingCounter = 0;
     boolean hpBarOn = false;
-    int hpBarCounter=0;
+    int hpBarCounter = 0;
 
 
     public int solidAreaDefaultX, solidAreaDefaultY;
@@ -45,7 +46,6 @@ public class Entity {
     public BufferedImage image, image2, image3;
     public String name;
     public boolean collision = false;
-    public int type;
     //character status
     public int level;
     public int strength;
@@ -55,16 +55,26 @@ public class Entity {
     public int exp;
     public int nextLevelExp;
     public int coin;
-            public Entity currentWepon;
-            public Entity currentShieald;
+    public Entity currentWepon;
+    public Entity currentShieald;
     public int maxLife;
     public int life;
     //Item atribiute
+
+
     public int attackValue;
     public int defenseValue;
-    public String description=" ";
+    public String description = " ";
     String dialogues[] = new String[20];
-
+    //TYPE
+    public int type;
+    public final int type_player = 0;
+    public final int type_npc = 1;
+    public final int type_monster = 2;
+    public final int type_sword = 3;
+    public final int type_spear = 4;
+    public final int type_shield = 5;
+    public final int type_consumable = 6;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -72,9 +82,11 @@ public class Entity {
 
     public void setAction() {
     }
-public void damageReaction(){
 
-}
+    public void damageReaction() {
+
+    }
+
     public void speak() {
         switch (gp.player.direction) {
             case "up":
@@ -92,6 +104,7 @@ public void damageReaction(){
         }
 
     }
+    public void use(Entity entity){}
 
     public void update() {
         setAction();
@@ -101,11 +114,11 @@ public void damageReaction(){
         gp.checker.checkEntity(this, gp.npc);
         gp.checker.checkEntity(this, gp.monster);
         boolean contactPlayer = gp.checker.checkPlayer(this);
-        if (this.type == 2 && contactPlayer == true) {
+        if (this.type == type_monster && contactPlayer == true) {
             if (gp.player.invincible == false) {
-                int damage=attack- gp.player.defense;
-                if(damage<0){
-                    damage=0;
+                int damage = attack - gp.player.defense;
+                if (damage < 0) {
+                    damage = 0;
                 }
                 //we can give damage
                 gp.player.life -= damage;
@@ -192,7 +205,7 @@ public void damageReaction(){
             }
 
             //MONSTER HP
-            if (type == 2 && hpBarOn==true) {
+            if (type == 2 && hpBarOn == true) {
                 double onScale = (double) gp.tileSize / maxLife;
                 double hpBarValue = onScale * life;
 
@@ -201,23 +214,23 @@ public void damageReaction(){
                 g2.setColor(Color.red);
                 g2.fillRect(screenX, screenY - 15, (int) hpBarValue, 10);
                 hpBarCounter++;
-                if(hpBarCounter>600){
-                    hpBarCounter=0;
-                    hpBarOn=false;
+                if (hpBarCounter > 600) {
+                    hpBarCounter = 0;
+                    hpBarOn = false;
                 }
             }
 
 
             if (invincible == true) {
-                hpBarOn=true;
-                hpBarCounter=0;
-                ChangeAlfa(g2,0.4F);
+                hpBarOn = true;
+                hpBarCounter = 0;
+                ChangeAlfa(g2, 0.4F);
             }
             if (dying == true) {
                 dyingAnimation(g2);
             }
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-            ChangeAlfa(g2,1F);
+            ChangeAlfa(g2, 1F);
         }
     }
 

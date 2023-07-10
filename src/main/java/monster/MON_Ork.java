@@ -6,18 +6,19 @@ import entity.Entity;
 import java.util.Random;
 
 public class MON_Ork extends Entity {
-GamePanel gp;
+    GamePanel gp;
+
     public MON_Ork(GamePanel gp) {
         super(gp);
-        this.gp=gp;
-        type=2;
+        this.gp = gp;
+        type = type_monster;
         name = "Green Ork";
         speed = 3 / 2;
         maxLife = 4;
         life = maxLife;
-        attack=5;
-        defense=0;
-        exp=2;
+        attack = 5;
+        defense = 0;
+        exp = 2;
         solidArea.x = 3;
         solidArea.y = 18;
         solidArea.width = 42;
@@ -29,17 +30,17 @@ GamePanel gp;
     }
 
     public void getImage() {
-        up1 = setup("/monster/ORK_1",gp.tileSize,gp.tileSize);
-        up2 = setup("/monster/ORK_2",gp.tileSize,gp.tileSize);
+        up1 = setup("/monster/ORK_1", gp.tileSize, gp.tileSize);
+        up2 = setup("/monster/ORK_2", gp.tileSize, gp.tileSize);
 
-        down1 = setup("/monster/ORK_1",gp.tileSize,gp.tileSize);
-        down2 = setup("/monster/ORK_2",gp.tileSize,gp.tileSize);
+        down1 = setup("/monster/ORK_1", gp.tileSize, gp.tileSize);
+        down2 = setup("/monster/ORK_2", gp.tileSize, gp.tileSize);
 
-        left1 = setup("/monster/ORK_1",gp.tileSize,gp.tileSize);
-        left2 = setup("/monster/ORK_2",gp.tileSize,gp.tileSize);
+        left1 = setup("/monster/ORK_1", gp.tileSize, gp.tileSize);
+        left2 = setup("/monster/ORK_2", gp.tileSize, gp.tileSize);
 
-        right1 = setup("/monster/ORK_1",gp.tileSize,gp.tileSize);
-        right2 = setup("/monster/ORK_2",gp.tileSize,gp.tileSize);
+        right1 = setup("/monster/ORK_1", gp.tileSize, gp.tileSize);
+        right2 = setup("/monster/ORK_2", gp.tileSize, gp.tileSize);
     }
 
     public void setAction() {
@@ -64,8 +65,8 @@ GamePanel gp;
 
     }
 
-    public void damageReaction(){
-        actionLockCounter=0;
-        direction=gp.player.direction;
+    public void damageReaction() {
+        actionLockCounter = 0;
+        direction = gp.player.direction;
     }
 }

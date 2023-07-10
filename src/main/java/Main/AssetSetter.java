@@ -3,7 +3,7 @@ package Main;
 import entity.NPC_Wizard;
 import monster.MON_Ork;
 
-import object.OBJ_Door;
+import object.*;
 
 
 public class AssetSetter {
@@ -15,13 +15,34 @@ public class AssetSetter {
     }
 
     public void setObject() {
-        gp.obj[0] = new OBJ_Door(gp);
-        gp.obj[0].worldX = gp.tileSize * 19;
-        gp.obj[0].worldY = gp.tileSize * 25;
-        gp.obj[1] = new OBJ_Door(gp);
-        gp.obj[1].worldX = gp.tileSize * 30;
-        gp.obj[1].worldY = gp.tileSize * 25;
-
+        int i =0;
+        gp.obj[i] = new OBJ_Door(gp);
+        gp.obj[i].worldX = gp.tileSize * 19;
+        gp.obj[i].worldY = gp.tileSize * 25;
+        i++;
+        gp.obj[i] = new OBJ_Door(gp);
+        gp.obj[i].worldX = gp.tileSize * 30;
+        gp.obj[i].worldY = gp.tileSize * 25;
+        i++;
+        gp.obj[i] = new OBJ_Key(gp);
+        gp.obj[i].worldX = gp.tileSize * 28;
+        gp.obj[i].worldY = gp.tileSize * 25;
+        i++;
+        gp.obj[i] = new OBJ_Key(gp);
+        gp.obj[i].worldX = gp.tileSize * 28;
+        gp.obj[i].worldY = gp.tileSize * 23;
+        i++;
+        gp.obj[i] = new OBJ_Spear(gp);
+        gp.obj[i].worldX = gp.tileSize * 26;
+        gp.obj[i].worldY = gp.tileSize * 22;
+        i++;
+        gp.obj[i] = new OBJ_Iron_Shield(gp);
+        gp.obj[i].worldX = gp.tileSize * 24;
+        gp.obj[i].worldY = gp.tileSize * 22;
+        i++;
+        gp.obj[i] = new OBJ_HP_Potion(gp);
+        gp.obj[i].worldX = gp.tileSize * 24;
+        gp.obj[i].worldY = gp.tileSize * 21;
     }
 
     public void setNPC() {
