@@ -16,6 +16,8 @@ public class Sound {
         soundURl[3] = getClass().getResource("/sound/damage-1.wav");
         soundURl[4] = getClass().getResource("/sound/dying.wav");
         soundURl[5] = getClass().getResource("/sound/swing-sword.wav");
+        soundURl[6]=getClass().getResource("/sound/lvl_up.wav");
+        soundURl[7]=getClass().getResource("/sound/inventory_click.wav");
     }
 
     public void setFile(int i) {

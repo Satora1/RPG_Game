@@ -2,10 +2,9 @@ package Main;
 
 import entity.NPC_Wizard;
 import monster.MON_Ork;
-import object.OBJ_Boots;
-import object.OBJ_Chest;
+
 import object.OBJ_Door;
-import object.OBJ_Key;
+
 
 public class AssetSetter {
     GamePanel gp;
@@ -16,12 +15,12 @@ public class AssetSetter {
     }
 
     public void setObject() {
-gp.obj[0]=new OBJ_Door(gp);
-        gp.obj[0].worldX=gp.tileSize*19;
-        gp.obj[0].worldY=gp.tileSize*25;
-        gp.obj[1]=new OBJ_Door(gp);
-        gp.obj[1].worldX=gp.tileSize*30;
-        gp.obj[1].worldY=gp.tileSize*25;
+        gp.obj[0] = new OBJ_Door(gp);
+        gp.obj[0].worldX = gp.tileSize * 19;
+        gp.obj[0].worldY = gp.tileSize * 25;
+        gp.obj[1] = new OBJ_Door(gp);
+        gp.obj[1].worldX = gp.tileSize * 30;
+        gp.obj[1].worldY = gp.tileSize * 25;
 
     }
 
@@ -30,9 +29,23 @@ gp.obj[0]=new OBJ_Door(gp);
         gp.npc[0].worldX = gp.tileSize * 21;
         gp.npc[0].worldY = gp.tileSize * 21;
     }
-    public void setMonster(){
-        gp.monster[0]=new MON_Ork(gp);
-        gp.monster[0].worldX=gp.tileSize*25;
-        gp.monster[0].worldY=gp.tileSize*33;
+
+    public void setMonster() {
+        int i = 0;
+        gp.monster[i] = new MON_Ork(gp);
+        gp.monster[i].worldX = gp.tileSize * 25;
+        gp.monster[i].worldY = gp.tileSize * 33;
+        i++;
+        gp.monster[i] = new MON_Ork(gp);
+        gp.monster[i].worldX = gp.tileSize * 26;
+        gp.monster[i].worldY = gp.tileSize * 33;
+        i++;
+        gp.monster[i] = new MON_Ork(gp);
+        gp.monster[i].worldX = gp.tileSize * 24;
+        gp.monster[i].worldY = gp.tileSize * 33;
+        i++;
+        gp.monster[i] = new MON_Ork(gp);
+        gp.monster[i].worldX = gp.tileSize * 25;
+        gp.monster[i].worldY = gp.tileSize * 32;
     }
 }

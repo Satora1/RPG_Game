@@ -136,7 +136,7 @@ public class CollisonChecker {
                         break;
                 }
                 if (entity.solidArea.intersects(target[i].solidArea)) {
-                    if(target[i]!=entity){
+                    if (target[i] != entity) {
                         entity.collisionOn = true;
                         index = i;
                     }
@@ -153,7 +153,7 @@ public class CollisonChecker {
     }
 
     public boolean checkPlayer(Entity entity) {
-        boolean contactPlayer=false;
+        boolean contactPlayer = false;
         //get entity solid area position
         entity.solidArea.x = entity.worldX + entity.solidArea.x;
         entity.solidArea.y = entity.worldY + entity.solidArea.y;
@@ -177,7 +177,7 @@ public class CollisonChecker {
         }
         if (entity.solidArea.intersects(gp.player.solidArea)) {
             entity.collisionOn = true;
-            contactPlayer=true;
+            contactPlayer = true;
         }
         entity.solidArea.x = entity.solidAreaDefaultX;
         entity.solidArea.y = entity.solidAreaDefaultY;

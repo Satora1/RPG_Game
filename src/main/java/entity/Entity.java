@@ -47,8 +47,22 @@ public class Entity {
     public boolean collision = false;
     public int type;
     //character status
+    public int level;
+    public int strength;
+    public int dextery;
+    public int attack;
+    public int defense;
+    public int exp;
+    public int nextLevelExp;
+    public int coin;
+            public Entity currentWepon;
+            public Entity currentShieald;
     public int maxLife;
     public int life;
+    //Item atribiute
+    public int attackValue;
+    public int defenseValue;
+    public String description=" ";
     String dialogues[] = new String[20];
 
 
@@ -89,8 +103,12 @@ public void damageReaction(){
         boolean contactPlayer = gp.checker.checkPlayer(this);
         if (this.type == 2 && contactPlayer == true) {
             if (gp.player.invincible == false) {
+                int damage=attack- gp.player.defense;
+                if(damage<0){
+                    damage=0;
+                }
                 //we can give damage
-                gp.player.life -= 1;
+                gp.player.life -= damage;
                 gp.player.invincible = true;
             }
         }
