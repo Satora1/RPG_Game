@@ -96,6 +96,7 @@ prevEventY=gp.player.worldY;
             gp.player.attackCanceled=true;
             gp.ui.currentDialogue = "you drink water";
             gp.player.life = gp.player.maxLife;
+            gp.player.mana=gp.player.maxMana;
             gp.aSetter.setMonster();
         }
     }

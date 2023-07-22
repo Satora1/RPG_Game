@@ -1,6 +1,7 @@
 package object;
 
 import Main.GamePanel;
+import entity.Entity;
 import entity.Projectile;
 
 public class OBJ_Rock extends Projectile {
@@ -23,4 +24,16 @@ public class OBJ_Rock extends Projectile {
         up1 = setup("/projectiles/rock", gp.tileSize, gp.tileSize);
 
     }
+    public boolean haveResource(Entity user) {
+        boolean haveResource = false;
+        if (user.ammo >= useCost) {
+            haveResource = true;
+        }
+        return haveResource;
+    }
+    public void subtractResources(Entity user){
+        user.ammo-=useCost;
+
+    }
+
 }

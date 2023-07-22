@@ -3,10 +3,7 @@ package entity;
 import Main.GamePanel;
 import Main.KeyHandler;
 
-import object.OBJ_Fireball;
-import object.OBJ_Key;
-import object.OBJ_Shield_Wood;
-import object.OBJ_Sword_Normal;
+import object.*;
 
 
 import java.awt.*;
@@ -54,12 +51,16 @@ public class Player extends Entity {
         coin = 0;
         currentWepon = new OBJ_Sword_Normal(gp);
         currentShieald = new OBJ_Shield_Wood(gp);
-        projectile = new OBJ_Fireball(gp);
+      projectile = new OBJ_Fireball(gp);
+       // projectile = new OBJ_Rock(gp);
         attack = getAttack();
         defense = getDefense();
         maxLife = 6;
         //6 life==3heart
         life = maxLife;
+        maxMana = 4;
+        mana = maxMana;
+        ammo = 10;
         // attackArea.width = 36;
         // attackArea.height = 36;
     }
@@ -181,9 +182,11 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         }
-        if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvilableCounter == 30) {
+        if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvilableCounter == 30
+                && projectile.haveResource(this) == true) {
             projectile.set(worldX, worldY, direction, true, this);
-
+//subtract cost (mana,ammo)
+            projectile.subtractResources(this);
             //add it to arry list
             gp.projectileList.add(projectile);
             shotAvilableCounter = 0;
