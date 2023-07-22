@@ -56,13 +56,14 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity npc[] = new Entity[10];
     public Entity monster[] = new Entity[20];
     ArrayList<Entity> entitiesList = new ArrayList<>();
+  public   ArrayList<Entity> projectileList = new ArrayList<>();
     //GAME STATE
     public int gameState;
     public final int playState = 1;
     public final int pauseGame = 2;
     public final int dialogueState = 3;
     public final int titleState = 0;
-    public final int characterState=4;
+    public final int characterState = 4;
 
 
     public GamePanel() {
@@ -78,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setMonster();
         aSetter.setNPC();
 
-       // playMusic(0);
+        // playMusic(0);
         gameState = titleState;
     }
 
@@ -109,7 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
                 drawCount++;
             }
             if (timer >= 1000000000) {
-                System.out.println("FPS" + drawCount);
+
 
                 drawCount = 0;
                 timer = 0;
@@ -136,6 +137,17 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                     if (monster[i].alive != true) {
                         monster[i] = null;
+                    }
+
+                }
+            }
+            for (int i = 0; i < projectileList.size(); i++) {
+                if (projectileList.get(i) != null) {
+                    if (projectileList.get(i).alive == true ) {
+                        projectileList.get(i).update();
+                    }
+                    if (projectileList.get(i).alive != true) {
+                        projectileList.remove(i);
                     }
 
                 }
@@ -181,6 +193,11 @@ public class GamePanel extends JPanel implements Runnable {
             for (int i = 0; i < monster.length; i++) {
                 if (monster[i] != null) {
                     entitiesList.add(monster[i]);
+                }
+            }
+            for (int i = 0; i <projectileList.size(); i++) {
+                if (projectileList.get(i) != null) {
+                    entitiesList.add(projectileList.get(i));
                 }
             }
 //SORT

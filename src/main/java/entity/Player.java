@@ -3,6 +3,7 @@ package entity;
 import Main.GamePanel;
 import Main.KeyHandler;
 
+import object.OBJ_Fireball;
 import object.OBJ_Key;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
@@ -53,13 +54,14 @@ public class Player extends Entity {
         coin = 0;
         currentWepon = new OBJ_Sword_Normal(gp);
         currentShieald = new OBJ_Shield_Wood(gp);
+        projectile = new OBJ_Fireball(gp);
         attack = getAttack();
         defense = getDefense();
         maxLife = 6;
         //6 life==3heart
         life = maxLife;
-       // attackArea.width = 36;
-       // attackArea.height = 36;
+        // attackArea.width = 36;
+        // attackArea.height = 36;
     }
 
     public void setItems() {
@@ -71,7 +73,7 @@ public class Player extends Entity {
 
     public int getAttack() {
 
-        attackArea=currentWepon.attackArea;
+        attackArea = currentWepon.attackArea;
         return attack = strength * currentWepon.attackValue;
     }
 
@@ -130,6 +132,7 @@ public class Player extends Entity {
 
             collisionOn = false;
             gp.checker.checkerTile(this);
+            gp.checker.checkerTile(this);
 
 
             int objectIndex = gp.checker.checkObject(this, true);
@@ -178,6 +181,14 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         }
+        if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvilableCounter == 30) {
+            projectile.set(worldX, worldY, direction, true, this);
+
+            //add it to arry list
+            gp.projectileList.add(projectile);
+            shotAvilableCounter = 0;
+            gp.playSE(8);
+        }
         //this need to be outside of key if statement!
         if (invincible == true) {
             invincibleCounter++;
@@ -185,6 +196,9 @@ public class Player extends Entity {
                 invincible = false;
                 invincibleCounter = 0;
             }
+        }
+        if (shotAvilableCounter < 30) {
+            shotAvilableCounter++;
         }
     }
 
@@ -220,7 +234,7 @@ public class Player extends Entity {
             solidArea.height = attackArea.height;
             //Check monster colision with update worldX,worldY and solid Area
             int monsterIndex = gp.checker.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex);
+            damageMonster(monsterIndex, attack);
             //after collsion check , resort orginal data
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -239,16 +253,15 @@ public class Player extends Entity {
     public void pickUpObject(int i) {
         if (i != 999) {
             String text;
-            if(inventory.size()!=maxInventorySize){
+            if (inventory.size() != maxInventorySize) {
                 inventory.add(gp.obj[i]);
                 gp.playSE(2);
-                text="Got a "+gp.obj[i].name+"!";
+                text = "Got a " + gp.obj[i].name + "!";
+            } else {
+                text = "You cannot carry any more!";
             }
-            else{
-                text ="You cannot carry any more!";
-            }
-gp.ui.addMessage(text);
-            gp.obj[i]=null;
+            gp.ui.addMessage(text);
+            gp.obj[i] = null;
         }
     }
 
@@ -265,7 +278,7 @@ gp.ui.addMessage(text);
 
     public void contactMonster(int i) {
         if (i != 999) {
-            if (invincible == false) {
+            if (invincible == false && gp.monster[i].dying == false) {
                 gp.playSE(3);
                 int damage = gp.monster[i].attack - defense;
                 if (damage < 0) {
@@ -281,7 +294,7 @@ gp.ui.addMessage(text);
 
     }
 
-    public void damageMonster(int i) {
+    public void damageMonster(int i, int attack) {
         if (i != 999) {
             if (gp.monster[i].invincible == false) {
                 gp.playSE(3);
@@ -319,26 +332,28 @@ gp.ui.addMessage(text);
             gp.ui.currentDialogue = "you are level " + level + "now!";
         }
     }
-public void selectItem(){
-        int itemIndex=gp.ui.getItemIndexOfSlot();
-        if(itemIndex<inventory.size()){
-            Entity selectedItem=inventory.get(itemIndex);
-            if(selectedItem.type==type_sword||selectedItem.type==type_spear){
-                currentWepon=selectedItem;
-                attack=getAttack();
+
+    public void selectItem() {
+        int itemIndex = gp.ui.getItemIndexOfSlot();
+        if (itemIndex < inventory.size()) {
+            Entity selectedItem = inventory.get(itemIndex);
+            if (selectedItem.type == type_sword || selectedItem.type == type_spear) {
+                currentWepon = selectedItem;
+                attack = getAttack();
                 getPlayerAttackImage();
 
             }
-            if(selectedItem.type==type_shield){
-                currentShieald=selectedItem;
-                defense=getDefense();
+            if (selectedItem.type == type_shield) {
+                currentShieald = selectedItem;
+                defense = getDefense();
             }
-            if(selectedItem.type==type_consumable){
-              selectedItem.use(this);
-              inventory.remove(itemIndex);
+            if (selectedItem.type == type_consumable) {
+                selectedItem.use(this);
+                inventory.remove(itemIndex);
             }
         }
-}
+    }
+
     public void draw(Graphics2D g2) {
         // g2.setColor(Color.white);
         // g2.fillRect(x,y,gp.tileSize,gp.tileSize);

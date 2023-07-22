@@ -32,6 +32,7 @@ public class Entity {
     public boolean attacking = false;
     public boolean alive = true;
     public boolean dying = false;
+    public int shotAvilableCounter = 0;
     public int dyingCounter = 0;
     boolean hpBarOn = false;
     int hpBarCounter = 0;
@@ -59,12 +60,17 @@ public class Entity {
     public Entity currentShieald;
     public int maxLife;
     public int life;
+    public int maxMana;
+    public int mana;
+    public Projectile projectile;
+
     //Item atribiute
 
 
     public int attackValue;
     public int defenseValue;
     public String description = " ";
+    public int useCost;
     String dialogues[] = new String[20];
     //TYPE
     public int type;
@@ -104,7 +110,9 @@ public class Entity {
         }
 
     }
-    public void use(Entity entity){}
+
+    public void use(Entity entity) {
+    }
 
     public void update() {
         setAction();
@@ -115,15 +123,7 @@ public class Entity {
         gp.checker.checkEntity(this, gp.monster);
         boolean contactPlayer = gp.checker.checkPlayer(this);
         if (this.type == type_monster && contactPlayer == true) {
-            if (gp.player.invincible == false) {
-                int damage = attack - gp.player.defense;
-                if (damage < 0) {
-                    damage = 0;
-                }
-                //we can give damage
-                gp.player.life -= damage;
-                gp.player.invincible = true;
-            }
+           damagePlayer(attack);
         }
         //if colison false can move
         if (collisionOn == false) {
@@ -159,8 +159,21 @@ public class Entity {
                 invincibleCounter = 0;
             }
         }
+        if (shotAvilableCounter < 30) {
+            shotAvilableCounter++;
+        }
     }
-
+public void damagePlayer(int attack){
+    if (gp.player.invincible == false) {
+        int damage = attack - gp.player.defense;
+        if (damage < 0) {
+            damage = 0;
+        }
+        //we can give damage
+        gp.player.life -= damage;
+        gp.player.invincible = true;
+    }
+}
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -262,7 +275,6 @@ public class Entity {
             ChangeAlfa(g2, 1f);
         }
         if (dyingCounter > i * 8) {
-            dying = false;
             alive = false;
         }
     }

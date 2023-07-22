@@ -2,6 +2,7 @@ package monster;
 
 import Main.GamePanel;
 import entity.Entity;
+import object.OBJ_Rock;
 
 import java.util.Random;
 
@@ -19,6 +20,7 @@ public class MON_Ork extends Entity {
         attack = 5;
         defense = 0;
         exp = 2;
+        projectile = new OBJ_Rock(gp);
         solidArea.x = 3;
         solidArea.y = 18;
         solidArea.width = 42;
@@ -61,8 +63,14 @@ public class MON_Ork extends Entity {
                 direction = "right";
             }
             actionLockCounter = 0;
-        }
 
+        }
+        int i = new Random().nextInt(100) + 1;
+        if (i > 99 && projectile.alive == false && shotAvilableCounter == 30) {
+            projectile.set(worldX, worldY, direction, true, this);
+            gp.projectileList.add(projectile);
+            shotAvilableCounter = 0;
+        }
     }
 
     public void damageReaction() {
