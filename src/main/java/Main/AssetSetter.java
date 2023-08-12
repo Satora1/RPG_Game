@@ -1,6 +1,7 @@
 package Main;
 
 import entity.NPC_Wizard;
+import monster.MON_Boss;
 import monster.MON_Ork;
 
 import object.*;
@@ -68,5 +69,9 @@ public class AssetSetter {
         gp.monster[i] = new MON_Ork(gp);
         gp.monster[i].worldX = gp.tileSize * 25;
         gp.monster[i].worldY = gp.tileSize * 32;
+        i++;
+        gp.monster[i]=new MON_Boss(gp);
+        gp.monster[i].worldX =gp.tileSize*26;
+        gp.monster[i].worldY =gp.tileSize*32;
     }
 }

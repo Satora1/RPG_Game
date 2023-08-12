@@ -332,6 +332,8 @@ public class Player extends Entity {
             defense = getDefense();
             gp.playSE(6);
             gp.gameState = gp.dialogueState;
+            gp.player.mana=gp.player.maxMana;
+            gp.player.life=gp.player.maxLife;
             gp.ui.currentDialogue = "you are level " + level + "now!";
         }
     }
