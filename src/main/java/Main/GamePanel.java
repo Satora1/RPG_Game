@@ -55,10 +55,11 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH);
     public Entity obj[] = new Entity[20];//ten slots for object, dispaly 10 obejct in game in same time
     public Entity npc[] = new Entity[20];
-    public InteractiveTile iTile[]=new InteractiveTile[50];
+    public ArrayList<Entity> particleList = new ArrayList<>();
+    public InteractiveTile iTile[] = new InteractiveTile[50];
     public Entity monster[] = new Entity[20];
     ArrayList<Entity> entitiesList = new ArrayList<>();
-  public   ArrayList<Entity> projectileList = new ArrayList<>();
+    public ArrayList<Entity> projectileList = new ArrayList<>();
     //GAME STATE
     public int gameState;
     public final int playState = 1;
@@ -139,16 +140,22 @@ public class GamePanel extends JPanel implements Runnable {
                     if (monster[i].alive == true && monster[i].dying == false) {
                         monster[i].update();
                     }
-                    if (monster[i].alive ==false) {
+                    if (monster[i].alive == false) {
                         monster[i].checkDrop();
                         monster[i] = null;
                     }
 
                 }
             }
+
+
+
+
+
+
             for (int i = 0; i < projectileList.size(); i++) {
                 if (projectileList.get(i) != null) {
-                    if (projectileList.get(i).alive == true ) {
+                    if (projectileList.get(i).alive == true) {
                         projectileList.get(i).update();
                     }
                     if (projectileList.get(i).alive != true) {
@@ -157,10 +164,21 @@ public class GamePanel extends JPanel implements Runnable {
 
                 }
             }
-            for(int i =0;i<iTile.length;i++){
-              if(iTile[i]!=null){
-                  iTile[i].update();
-              }
+            for (int i = 0; i < particleList.size(); i++) {
+                if (particleList.get(i) != null) {
+                    if (particleList.get(i).alive == true) {
+                        particleList.get(i).update();
+                    }
+                    if (particleList.get(i).alive != true) {
+                        particleList.remove(i);
+                    }
+
+                }
+            }
+            for (int i = 0; i < iTile.length; i++) {
+                if (iTile[i] != null) {
+                    iTile[i].update();
+                }
             }
         }
         if (gameState == pauseGame) {
@@ -190,8 +208,8 @@ public class GamePanel extends JPanel implements Runnable {
             tileM.draw(g2);
             //INTERACTIVE TILES
 
-            for(int i=0;i<iTile.length;i++){
-                if(iTile[i]!=null){
+            for (int i = 0; i < iTile.length; i++) {
+                if (iTile[i] != null) {
                     iTile[i].draw(g2);
                 }
             }
@@ -213,9 +231,14 @@ public class GamePanel extends JPanel implements Runnable {
                     entitiesList.add(monster[i]);
                 }
             }
-            for (int i = 0; i <projectileList.size(); i++) {
+            for (int i = 0; i < projectileList.size(); i++) {
                 if (projectileList.get(i) != null) {
                     entitiesList.add(projectileList.get(i));
+                }
+            }
+            for (int i = 0; i < particleList.size(); i++) {
+                if (particleList.get(i) != null) {
+                    entitiesList.add(particleList.get(i));
                 }
             }
 //SORT
@@ -243,7 +266,7 @@ public class GamePanel extends JPanel implements Runnable {
             long passed = drawEnd - drawStart;
             g2.setColor(Color.white);
             g2.drawString("draw time " + passed, 10, 400);
-            g2.drawString("X " +player.worldX, 10, 350);
+            g2.drawString("X " + player.worldX, 10, 350);
             g2.drawString("Y" + player.worldY, 10, 300);
             System.out.println("draw time" + passed);
 

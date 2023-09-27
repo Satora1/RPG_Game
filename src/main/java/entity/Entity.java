@@ -106,7 +106,36 @@ public class Entity {
             }
         }
     }
-
+    public Color getParticleColor(){
+        Color color = null;
+        return  color;
+    }
+    public int getParticleSize(){
+        int size =0;  //6pix
+        return size;
+    }
+    public  int  getParticleSpeed(){
+        int speed =0;
+        return speed;
+    }
+    public  int getParticleMaxLife(){
+        int maxLife=0;
+        return maxLife;
+    }
+    public  void generateParticle(Entity genartor,Entity target){
+Color color =genartor.getParticleColor();
+int size =genartor.getParticleSize();
+int speed =genartor.getParticleSpeed();
+int maxLife=genartor.getParticleMaxLife();
+Particle p1=new Particle(gp,genartor,color,size,speed,maxLife,-2,-1);
+        Particle p2=new Particle(gp,genartor,color,size,speed,maxLife,2,-1);
+        Particle p3=new Particle(gp,genartor,color,size,speed,maxLife,-2,1);
+        Particle p4=new Particle(gp,genartor,color,size,speed,maxLife,2,1);
+gp.projectileList.add(p1);
+        gp.projectileList.add(p2);
+        gp.projectileList.add(p3);
+        gp.projectileList.add(p4);
+    }
     public void damageReaction() {
 
     }
