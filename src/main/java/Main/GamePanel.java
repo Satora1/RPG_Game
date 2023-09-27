@@ -3,6 +3,7 @@ package Main;
 import entity.Entity;
 import entity.Player;
 import tile.TileMenager;
+import tile_interactive.InteractiveTile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,8 +53,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Entity and Objects
     public Player player = new Player(this, keyH);
-    public Entity obj[] = new Entity[10];//ten slots for object, dispaly 10 obejct in game in same time
-    public Entity npc[] = new Entity[10];
+    public Entity obj[] = new Entity[20];//ten slots for object, dispaly 10 obejct in game in same time
+    public Entity npc[] = new Entity[20];
+    public InteractiveTile iTile[]=new InteractiveTile[50];
     public Entity monster[] = new Entity[20];
     ArrayList<Entity> entitiesList = new ArrayList<>();
   public   ArrayList<Entity> projectileList = new ArrayList<>();
@@ -78,6 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
         aSetter.setMonster();
         aSetter.setNPC();
+        aSetter.setInteractiveTile();
 
         // playMusic(0);
         gameState = titleState;
@@ -97,6 +100,7 @@ public class GamePanel extends JPanel implements Runnable {
         long currentTime;
         long timer = 0;
         int drawCount = 0;
+
 
         while (gameThread != null) {
             currentTime = System.nanoTime();
@@ -135,7 +139,8 @@ public class GamePanel extends JPanel implements Runnable {
                     if (monster[i].alive == true && monster[i].dying == false) {
                         monster[i].update();
                     }
-                    if (monster[i].alive != true) {
+                    if (monster[i].alive ==false) {
+                        monster[i].checkDrop();
                         monster[i] = null;
                     }
 
@@ -151,6 +156,11 @@ public class GamePanel extends JPanel implements Runnable {
                     }
 
                 }
+            }
+            for(int i =0;i<iTile.length;i++){
+              if(iTile[i]!=null){
+                  iTile[i].update();
+              }
             }
         }
         if (gameState == pauseGame) {
@@ -177,8 +187,16 @@ public class GamePanel extends JPanel implements Runnable {
         }
         //OTHERS
         else {//TILE
-//add entity to list
             tileM.draw(g2);
+            //INTERACTIVE TILES
+
+            for(int i=0;i<iTile.length;i++){
+                if(iTile[i]!=null){
+                    iTile[i].draw(g2);
+                }
+            }
+
+            //add entity to list
             entitiesList.add(player);
             for (int i = 0; i < npc.length; i++) {
                 if (npc[i] != null) {
@@ -225,7 +243,10 @@ public class GamePanel extends JPanel implements Runnable {
             long passed = drawEnd - drawStart;
             g2.setColor(Color.white);
             g2.drawString("draw time " + passed, 10, 400);
+            g2.drawString("X " +player.worldX, 10, 350);
+            g2.drawString("Y" + player.worldY, 10, 300);
             System.out.println("draw time" + passed);
+
         }
 
 

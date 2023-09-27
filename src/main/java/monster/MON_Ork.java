@@ -2,7 +2,10 @@ package monster;
 
 import Main.GamePanel;
 import entity.Entity;
+import object.OBJ_CoinVal1;
+import object.OBJ_Heart;
 import object.OBJ_Rock;
+import object.OBJ_ManaCrystal;
 
 import java.util.Random;
 
@@ -76,5 +79,20 @@ public class MON_Ork extends Entity {
     public void damageReaction() {
         actionLockCounter = 0;
         direction = gp.player.direction;
+    }
+
+    public void checkDrop() {
+        //CAST DIE
+        int i = new Random().nextInt(100) + 1;
+        //set monster drop
+        if (i < 50) {
+            dropItem(new OBJ_CoinVal1(gp));
+        }
+        if (i >= 50 && i < 75) {
+            dropItem(new OBJ_Heart(gp));
+        }
+        if (i >= 75 && i < 100) {
+            dropItem(new OBJ_ManaCrystal(gp));
+        }
     }
 }

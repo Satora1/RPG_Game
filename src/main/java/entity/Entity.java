@@ -73,6 +73,7 @@ public class Entity {
     public String description = " ";
     public int useCost;
     String dialogues[] = new String[20];
+    public int value;
     //TYPE
     public int type;
     public final int type_player = 0;
@@ -82,12 +83,28 @@ public class Entity {
     public final int type_spear = 4;
     public final int type_shield = 5;
     public final int type_consumable = 6;
+    public final int type_pickupOnly = 7;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
 
     public void setAction() {
+    }
+
+    public void checkDrop() {
+
+    }
+
+    public void dropItem(Entity droppedItem) {
+        for (int i = 0; i < gp.obj.length; i++) {
+            if (gp.obj[i] == null) {
+                gp.obj[i] = droppedItem;
+                gp.obj[i].worldX = worldX;//dead moster
+                gp.obj[i].worldY = worldY;
+                break;
+            }
+        }
     }
 
     public void damageReaction() {
@@ -122,9 +139,10 @@ public class Entity {
         gp.checker.checkObject(this, false);
         gp.checker.checkEntity(this, gp.npc);
         gp.checker.checkEntity(this, gp.monster);
+        gp.checker.checkEntity(this,gp.iTile);
         boolean contactPlayer = gp.checker.checkPlayer(this);
         if (this.type == type_monster && contactPlayer == true) {
-           damagePlayer(attack);
+            damagePlayer(attack);
         }
         //if colison false can move
         if (collisionOn == false) {
@@ -164,17 +182,19 @@ public class Entity {
             shotAvilableCounter++;
         }
     }
-public void damagePlayer(int attack){
-    if (gp.player.invincible == false) {
-        int damage = attack - gp.player.defense;
-        if (damage < 0) {
-            damage = 0;
+
+    public void damagePlayer(int attack) {
+        if (gp.player.invincible == false) {
+            int damage = attack - gp.player.defense;
+            if (damage < 0) {
+                damage = 0;
+            }
+            //we can give damage
+            gp.player.life -= damage;
+            gp.player.invincible = true;
         }
-        //we can give damage
-        gp.player.life -= damage;
-        gp.player.invincible = true;
     }
-}
+
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -243,7 +263,7 @@ public void damagePlayer(int attack){
             if (dying == true) {
                 dyingAnimation(g2);
             }
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY, null);
             ChangeAlfa(g2, 1F);
         }
     }

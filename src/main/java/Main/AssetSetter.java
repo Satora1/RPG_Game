@@ -5,6 +5,7 @@ import monster.MON_Boss;
 import monster.MON_Ork;
 
 import object.*;
+import tile_interactive.IT_DryTree;
 
 
 public class AssetSetter {
@@ -25,11 +26,11 @@ public class AssetSetter {
         gp.obj[i].worldX = gp.tileSize * 30;
         gp.obj[i].worldY = gp.tileSize * 25;
         i++;
-        gp.obj[i] = new OBJ_Key(gp);
+        gp.obj[i] = new OBJ_CoinVal1(gp);
         gp.obj[i].worldX = gp.tileSize * 28;
         gp.obj[i].worldY = gp.tileSize * 25;
         i++;
-        gp.obj[i] = new OBJ_Key(gp);
+        gp.obj[i] = new OBJ_CoinVal1(gp);
         gp.obj[i].worldX = gp.tileSize * 28;
         gp.obj[i].worldY = gp.tileSize * 23;
         i++;
@@ -44,6 +45,14 @@ public class AssetSetter {
         gp.obj[i] = new OBJ_HP_Potion(gp);
         gp.obj[i].worldX = gp.tileSize * 24;
         gp.obj[i].worldY = gp.tileSize * 21;
+        i++;
+        gp.obj[i] = new OBJ_ManaCrystal(gp);
+        gp.obj[i].worldX = gp.tileSize * 24;
+        gp.obj[i].worldY = gp.tileSize * 26;
+        i++;
+        gp.obj[i] = new OBJ_Heart(gp);
+        gp.obj[i].worldX = gp.tileSize * 24;
+        gp.obj[i].worldY = gp.tileSize * 25;
     }
 
     public void setNPC() {
@@ -73,5 +82,14 @@ public class AssetSetter {
         gp.monster[i]=new MON_Boss(gp);
         gp.monster[i].worldX =gp.tileSize*26;
         gp.monster[i].worldY =gp.tileSize*32;
+    }
+    public void setInteractiveTile(){
+        int i=0;
+        gp.iTile[i]=new IT_DryTree(gp,14,25);
+        i++;
+        gp.iTile[i]=new IT_DryTree(gp,15,25);
+        i++;
+        gp.iTile[i]=new IT_DryTree(gp,13,25);
+
     }
 }

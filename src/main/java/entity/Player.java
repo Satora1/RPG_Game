@@ -51,8 +51,8 @@ public class Player extends Entity {
         coin = 0;
         currentWepon = new OBJ_Sword_Normal(gp);
         currentShieald = new OBJ_Shield_Wood(gp);
-      projectile = new OBJ_Fireball(gp);
-       // projectile = new OBJ_Rock(gp);
+        projectile = new OBJ_Fireball(gp);
+        // projectile = new OBJ_Rock(gp);
         attack = getAttack();
         defense = getDefense();
         maxLife = 6;
@@ -144,7 +144,8 @@ public class Player extends Entity {
 //check monster collision
             int monsterIndex = gp.checker.checkEntity(this, gp.monster);
             contactMonster(monsterIndex);
-
+//check interactive tile collision
+            int iTileIndex = gp.checker.checkEntity(this, gp.iTile);
             //check event
             gp.eHandler.CheckEvent();
 
@@ -203,6 +204,12 @@ public class Player extends Entity {
         if (shotAvilableCounter < 30) {
             shotAvilableCounter++;
         }
+        if (life > maxLife) {
+            life = maxLife;
+        }
+        if (mana > maxMana) {
+            mana = maxMana;
+        }
     }
 
     public void attacking() {
@@ -238,6 +245,10 @@ public class Player extends Entity {
             //Check monster colision with update worldX,worldY and solid Area
             int monsterIndex = gp.checker.checkEntity(this, gp.monster);
             damageMonster(monsterIndex, attack);
+
+            int iTileIndex = gp.checker.checkEntity(this, gp.iTile);
+            damageInteractiveTile(iTileIndex);
+
             //after collsion check , resort orginal data
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -255,16 +266,25 @@ public class Player extends Entity {
 
     public void pickUpObject(int i) {
         if (i != 999) {
-            String text;
-            if (inventory.size() != maxInventorySize) {
-                inventory.add(gp.obj[i]);
-                gp.playSE(2);
-                text = "Got a " + gp.obj[i].name + "!";
-            } else {
-                text = "You cannot carry any more!";
+            //PICKUP ONLY ITEMS
+            if (gp.obj[i].type == type_pickupOnly) {
+                gp.obj[i].use(this);
+                gp.obj[i] = null;
             }
-            gp.ui.addMessage(text);
-            gp.obj[i] = null;
+            //INVENTORY ITEMS
+            else {
+                String text;
+                if (inventory.size() != maxInventorySize) {
+                    inventory.add(gp.obj[i]);
+                    gp.playSE(2);
+                    text = "Got a " + gp.obj[i].name + "!";
+                } else {
+                    text = "You cannot carry any more!";
+                }
+                gp.ui.addMessage(text);
+                gp.obj[i] = null;
+            }
+
         }
     }
 
@@ -288,9 +308,9 @@ public class Player extends Entity {
                     damage = 0;
                 }
 
-
                 life -= damage;
                 invincible = true;
+
             }
 
         }
@@ -321,19 +341,32 @@ public class Player extends Entity {
         }
     }
 
+    public void damageInteractiveTile(int i) {
+        if (i != 999 && gp.iTile[i].destructible == true && gp.iTile[i].isCorrectItem(this) == true && gp.iTile[i].invincible==false) {
+            gp.iTile[i].playSE();
+            gp.iTile[i].life--;
+            gp.iTile[i].invincible = true;
+            if (gp.iTile[i].life == 0) {
+                gp.iTile[i] = gp.iTile[i].getDestroyedForm();
+            }
+
+        }
+    }
+
     public void checkLevelUp() {
         if (exp >= nextLevelExp) {
             level++;
             nextLevelExp = nextLevelExp * 2;
             maxLife += 2;
+            maxMana += 1;
             strength++;
             dextery++;
             attack = getAttack();
             defense = getDefense();
             gp.playSE(6);
             gp.gameState = gp.dialogueState;
-            gp.player.mana=gp.player.maxMana;
-            gp.player.life=gp.player.maxLife;
+            gp.player.mana = gp.player.maxMana;
+            gp.player.life = gp.player.maxLife;
             gp.ui.currentDialogue = "you are level " + level + "now!";
         }
     }
