@@ -20,7 +20,7 @@ public class UI {
     ArrayList<Integer> messageCounter = new ArrayList<>();
     public int commandNumber = 0;
 
-    BufferedImage heart_full, heart_half, heart_empty,mana,mana_empty;
+    BufferedImage heart_full, heart_half, heart_empty, mana, mana_empty;
     public boolean gameFinished = false;
     public int slotCol = 0;
     public int slotRow = 0;
@@ -35,9 +35,9 @@ public class UI {
         heart_full = heart.image;
         heart_half = heart.image2;
         heart_empty = heart.image3;
-        Entity crystal =new OBJ_ManaCrystal(gp);
+        Entity crystal = new OBJ_ManaCrystal(gp);
         mana = crystal.image;
-        mana_empty =crystal.image2;
+        mana_empty = crystal.image2;
     }
 
     public void addMessage(String text) {
@@ -107,22 +107,22 @@ public class UI {
             x += gp.tileSize;
         }
         //DRAW MAX MANAX
-        x=(gp.tileSize/2)-5;
-        y=(int)(gp.tileSize*1.5);
-        i=0;
-        while (i<gp.player.maxMana){
-            g2.drawImage(mana_empty,x,y,null);
+        x = (gp.tileSize / 2) - 5;
+        y = (int) (gp.tileSize * 1.5);
+        i = 0;
+        while (i < gp.player.maxMana) {
+            g2.drawImage(mana_empty, x, y, null);
             i++;
-            x +=35;
+            x += 35;
         }
 //DRAW MANA
-        x=(gp.tileSize/2)-5;
-        y=(int)(gp.tileSize*1.5);
-        i=0;
-        while (i<gp.player.mana){
-            g2.drawImage(mana,x,y,null);
+        x = (gp.tileSize / 2) - 5;
+        y = (int) (gp.tileSize * 1.5);
+        i = 0;
+        while (i < gp.player.mana) {
+            g2.drawImage(mana, x, y, null);
             i++;
-            x+=35;
+            x += 35;
         }
     }
 
@@ -162,7 +162,7 @@ public class UI {
 
     public void drawCharacterScreen() {
         //CREATE A FRAME
-        final int frameX = gp.tileSize;
+        final int frameX = gp.tileSize * 2;
         final int frameY = gp.tileSize;
         final int frameWidth = gp.tileSize * 5;
         final int frameHeight = gp.tileSize * 10;
@@ -193,7 +193,7 @@ public class UI {
         g2.drawString("Next Level", textX, textY);
         textY += lineHeight;
         g2.drawString("Coin", textX, textY);
-        textY += lineHeight +10;
+        textY += lineHeight + 10;
         g2.drawString("Weapon", textX, textY);
         textY += lineHeight + 15;
         g2.drawString("Shield", textX, textY);
@@ -275,10 +275,10 @@ public class UI {
         for (int i = 0; i < gp.player.inventory.size(); i++) {
 
             //Equip cursor
-            if(gp.player.inventory.get(i)==gp.player.currentWepon||
-            gp.player.inventory.get(i)==gp.player.currentShieald){
-                g2.setColor(new Color(240,190,90));
-                g2.fillRoundRect(slotX,slotY,gp.tileSize,gp.tileSize,10,10);
+            if (gp.player.inventory.get(i) == gp.player.currentWepon ||
+                    gp.player.inventory.get(i) == gp.player.currentShieald) {
+                g2.setColor(new Color(240, 190, 90));
+                g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
             }
             g2.drawImage(gp.player.inventory.get(i).down1, slotX, slotY, null);
             slotX += slotSize;
@@ -309,9 +309,9 @@ public class UI {
         if (itemIndex < gp.player.inventory.size()) {
             drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
 
-            for(String line:gp.player.inventory.get(itemIndex).description.split("\n")){
-                g2.drawString(line,textX,textY);
-                textY+=32;
+            for (String line : gp.player.inventory.get(itemIndex).description.split("\n")) {
+                g2.drawString(line, textX, textY);
+                textY += 32;
             }
 
         }
