@@ -80,6 +80,10 @@ public class UI {
         if (gp.gameState == gp.optionsState) {
             drawOptionsScreen();
         }
+        //game over state
+        if (gp.gameState == gp.gameOverState) {
+            gameOverScreen();
+        }
     }
 
     public void drawOptionsScreen() throws IOException {
@@ -631,6 +635,41 @@ public class UI {
                 subState = 0;
                 commandNumber = 4;
             }
+        }
+
+    }
+
+    public void gameOverScreen() {
+        g2.setColor(new Color(0, 0, 0, 150));
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        int X;
+        int Y;
+        String text;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 110f));
+        text="GAME OVER";
+        g2.setColor(Color.black);
+        X=getXforCenterdText(text);
+        Y=gp.tileSize*4;
+        g2.drawString(text,X,Y);
+        //Main
+        g2.setColor(Color.white);
+        g2.drawString(text,X-4,Y-4);
+        //retry
+        g2.setFont(g2.getFont().deriveFont(50f));
+        text="RETRY";
+        X=getXforCenterdText(text);
+        Y+=gp.tileSize*4;
+        g2.drawString(text,X,Y);
+        if(commandNumber==0){
+            g2.drawString(">",X-40,Y);
+        }
+        //back to title screen
+        text="QUIT";
+        X=getXforCenterdText(text);
+        Y+=55;
+        g2.drawString(text,X,Y);
+        if(commandNumber==1){
+            g2.drawString(">",X-40,Y);
         }
 
     }
