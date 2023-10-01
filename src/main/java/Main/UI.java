@@ -6,6 +6,7 @@ import object.OBJ_ManaCrystal;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class UI {
@@ -46,7 +47,7 @@ public class UI {
         messageCounter.add(0);
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2) throws IOException {
         this.g2 = g2;
         g2.setFont(arial_40);
         g2.setColor(Color.white);
@@ -81,7 +82,7 @@ public class UI {
         }
     }
 
-    public void drawOptionsScreen() {
+    public void drawOptionsScreen() throws IOException {
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(32F));
         //sub window
@@ -107,7 +108,7 @@ public class UI {
         gp.keyH.enterPressed = false;
     }
 
-    public void options_top(int frameX, int frameY) {
+    public void options_top(int frameX, int frameY) throws IOException {
         int textX;
         int textY;
 //title
@@ -192,6 +193,7 @@ public class UI {
         g2.drawRect(textX, textY, 120, 24);
         volumeWidth = 24 * gp.soundEffect.volumeScale;
         g2.fillRect(textX, textY, volumeWidth, 24);
+        gp.config.saveConfig();
     }
 
     public void drawPlayerLife() {

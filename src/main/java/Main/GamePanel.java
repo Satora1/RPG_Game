@@ -8,6 +8,7 @@ import tile_interactive.InteractiveTile;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound soundEffect = new Sound();
+    Config config =new Config(this);
 
     public UI ui = new UI(this);
     public Eventhandler eHandler = new Eventhandler(this);
@@ -95,7 +97,9 @@ public class GamePanel extends JPanel implements Runnable {
         gameState = titleState;
         tempscreen =new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_ARGB);
         g2 =(Graphics2D)tempscreen.getGraphics();
-setFullScreen();
+if(fullScreenOn==true){
+    setFullScreen();
+}
     }
 
     public void startGameThread() {
@@ -121,7 +125,11 @@ setFullScreen();
             lastTime = currentTime;
             if (delta >= 1) {
                 update();
-                drawToTempScreen();//draw evrything to buffer image
+                try {
+                    drawToTempScreen();//draw evrything to buffer image
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 drawToScreen();//draw buffer image to screen
                 delta--;
                 drawCount++;
@@ -199,7 +207,7 @@ setFullScreen();
 
 
     }
-public void drawToTempScreen(){
+public void drawToTempScreen() throws IOException {
     //DEBUG
     long drawStart = 0;
     if (keyH.checkDrawTime == true) {
