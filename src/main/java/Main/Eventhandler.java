@@ -59,7 +59,7 @@ public class Eventhandler {
         }
         //event happens
 //hut 38/22
-
+//
     }
 
     public boolean hit(int map, int col, int row, String reqDirection) {
