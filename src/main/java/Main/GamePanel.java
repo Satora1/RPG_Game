@@ -36,6 +36,8 @@ public class GamePanel extends JPanel implements Runnable {
     //World map mapramiters
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
+    public final int maxMap=10;
+    public int currnetMap=0;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
     //Full screen
@@ -62,11 +64,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Entity and Objects
     public Player player = new Player(this, keyH);
-    public Entity obj[] = new Entity[20];//ten slots for object, dispaly 10 obejct in game in same time
-    public Entity npc[] = new Entity[20];
+    public Entity obj[][] = new Entity[maxMap][20];//ten slots for object, dispaly 10 obejct in game in same time
+    public Entity npc[][] = new Entity[maxMap][20];
+    public Entity monster[][] = new Entity[maxMap][20];
+
+    public InteractiveTile iTile[][] = new InteractiveTile[maxMap][50];
     public ArrayList<Entity> particleList = new ArrayList<>();
-    public InteractiveTile iTile[] = new InteractiveTile[50];
-    public Entity monster[] = new Entity[20];
     ArrayList<Entity> entitiesList = new ArrayList<>();
     public ArrayList<Entity> projectileList = new ArrayList<>();
     //GAME STATE
@@ -150,20 +153,20 @@ public class GamePanel extends JPanel implements Runnable {
             //PLAYER
             player.update();
             //NPC
-            for (int i = 0; i < npc.length; i++) {
-                if (npc[i] != null) {
-                    npc[i].update();
+            for (int i = 0; i < npc[1].length; i++) {
+                if (npc[currnetMap][i] != null) {
+                    npc[currnetMap][i].update();
                 }
 
             }
-            for (int i = 0; i < monster.length; i++) {
-                if (monster[i] != null) {
-                    if (monster[i].alive == true && monster[i].dying == false) {
-                        monster[i].update();
+            for (int i = 0; i < monster[1].length; i++) {
+                if (monster[currnetMap][i] != null) {
+                    if (monster[currnetMap][i].alive == true && monster[currnetMap][i].dying == false) {
+                        monster[currnetMap][i].update();
                     }
-                    if (monster[i].alive == false) {
-                        monster[i].checkDrop();
-                        monster[i] = null;
+                    if (monster[currnetMap][i].alive == false) {
+                        monster[currnetMap][i].checkDrop();
+                        monster[currnetMap][i] = null;
                     }
 
                 }
@@ -192,9 +195,9 @@ public class GamePanel extends JPanel implements Runnable {
 
                 }
             }
-            for (int i = 0; i < iTile.length; i++) {
-                if (iTile[i] != null) {
-                    iTile[i].update();
+            for (int i = 0; i < iTile[1].length; i++) {
+                if (iTile[currnetMap][i] != null) {
+                    iTile[currnetMap][i].update();
                 }
             }
         }
@@ -220,27 +223,27 @@ public class GamePanel extends JPanel implements Runnable {
             tileM.draw(g2);
             //INTERACTIVE TILES
 
-            for (int i = 0; i < iTile.length; i++) {
-                if (iTile[i] != null) {
-                    iTile[i].draw(g2);
+            for (int i = 0; i < iTile[1].length; i++) {
+                if (iTile[currnetMap][i] != null) {
+                    iTile[currnetMap][i].draw(g2);
                 }
             }
 
             //add entity to list
             entitiesList.add(player);
-            for (int i = 0; i < npc.length; i++) {
-                if (npc[i] != null) {
-                    entitiesList.add(npc[i]);
+            for (int i = 0; i < npc[1].length; i++) {
+                if (npc[currnetMap][i] != null) {
+                    entitiesList.add(npc[currnetMap][i]);
                 }
             }
-            for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    entitiesList.add(obj[i]);
+            for (int i = 0; i < obj[1].length; i++) {
+                if (obj[currnetMap][i] != null) {
+                    entitiesList.add(obj[currnetMap][i]);
                 }
             }
-            for (int i = 0; i < monster.length; i++) {
-                if (monster[i] != null) {
-                    entitiesList.add(monster[i]);
+            for (int i = 0; i < monster[1].length; i++) {
+                if (monster[currnetMap][i] != null) {
+                    entitiesList.add(monster[currnetMap][i]);
                 }
             }
             for (int i = 0; i < projectileList.size(); i++) {

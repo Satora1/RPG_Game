@@ -254,6 +254,7 @@ if(gp.ui.commandNumber<0){
     gp.ui.commandNumber=1;
 }
             gp.playSE(7);
+
         }
         if(code==KeyEvent.VK_S){
             gp.ui.commandNumber++;
@@ -269,6 +270,7 @@ if(gp.ui.commandNumber<0){
             }
             else if(gp.ui.commandNumber==1){
                 gp.gameState=gp.titleState;
+                gp.stopMusic();
                 gp.restart();
             }
         }

@@ -38,8 +38,9 @@ public class Player extends Entity {
     }
 
     public void setDeflautValues() {
-        worldX = gp.tileSize * 25;
-        worldY = gp.tileSize * 25;
+          worldX = gp.tileSize * 25;
+         worldY = gp.tileSize * 25;
+
         speed = 4;
         direction = "down";
         //player status
@@ -211,21 +212,26 @@ public class Player extends Entity {
         if (mana > maxMana) {
             mana = maxMana;
         }
-        if(life<=0){
-            gp.gameState=gp.gameOverState;
+        if (life <= 0) {
+            gp.gameState = gp.gameOverState;
+            gp.ui.commandNumber = -1;
             gp.playSE(9);
         }
     }
-public void setDefaultPositions(){
-    worldX = gp.tileSize * 25;
-    worldY = gp.tileSize * 25;
-    direction = "down";
-}
-public void restoreLifeAndMana(){
-        life=maxLife;
-        mana=maxMana;
-        invincible=false;
-}
+
+    public void setDefaultPositions() {
+        worldX = gp.tileSize * 25;
+        worldY = gp.tileSize * 25;
+
+        direction = "down";
+    }
+
+    public void restoreLifeAndMana() {
+        life = maxLife;
+        mana = maxMana;
+        invincible = false;
+    }
+
     public void attacking() {
         spriteCounter++;
         if (spriteCounter <= 5) {
@@ -281,22 +287,22 @@ public void restoreLifeAndMana(){
     public void pickUpObject(int i) {
         if (i != 999) {
             //PICKUP ONLY ITEMS
-            if (gp.obj[i].type == type_pickupOnly) {
-                gp.obj[i].use(this);
-                gp.obj[i] = null;
+            if (gp.obj[gp.currnetMap][i].type == type_pickupOnly) {
+                gp.obj[gp.currnetMap][i].use(this);
+                gp.obj[gp.currnetMap][i] = null;
             }
             //INVENTORY ITEMS
             else {
                 String text;
                 if (inventory.size() != maxInventorySize) {
-                    inventory.add(gp.obj[i]);
+                    inventory.add(gp.obj[gp.currnetMap][i]);
                     gp.playSE(2);
-                    text = "Got a " + gp.obj[i].name + "!";
+                    text = "Got a " + gp.obj[gp.currnetMap][i].name + "!";
                 } else {
                     text = "You cannot carry any more!";
                 }
                 gp.ui.addMessage(text);
-                gp.obj[i] = null;
+                gp.obj[gp.currnetMap][i] = null;
             }
 
         }
@@ -307,7 +313,7 @@ public void restoreLifeAndMana(){
             if (i != 999) {
                 attackCanceled = true;
                 gp.gameState = gp.dialogueState;
-                gp.npc[i].speak();
+                gp.npc[gp.currnetMap][i].speak();
             }
 
         }
@@ -315,9 +321,9 @@ public void restoreLifeAndMana(){
 
     public void contactMonster(int i) {
         if (i != 999) {
-            if (invincible == false && gp.monster[i].dying == false) {
+            if (invincible == false && gp.monster[gp.currnetMap][i].dying == false) {
                 gp.playSE(3);
-                int damage = gp.monster[i].attack - defense;
+                int damage = gp.monster[gp.currnetMap][i].attack - defense;
                 if (damage < 0) {
                     damage = 0;
                 }
@@ -333,22 +339,22 @@ public void restoreLifeAndMana(){
 
     public void damageMonster(int i, int attack) {
         if (i != 999) {
-            if (gp.monster[i].invincible == false) {
+            if (gp.monster[gp.currnetMap][i].invincible == false) {
                 gp.playSE(3);
-                int damage = attack - gp.monster[i].defense;
+                int damage = attack - gp.monster[gp.currnetMap][i].defense;
                 if (damage < 0) {
                     damage = 0;
                 }
-                gp.monster[i].life -= damage;
+                gp.monster[gp.currnetMap][i].life -= damage;
                 gp.ui.addMessage(damage + "damage");
-                gp.monster[i].invincible = true;
-                gp.monster[i].damageReaction();
-                if (gp.monster[i].life <= 0) {
+                gp.monster[gp.currnetMap][i].invincible = true;
+                gp.monster[gp.currnetMap][i].damageReaction();
+                if (gp.monster[gp.currnetMap][i].life <= 0) {
                     gp.playSE(4);
-                    gp.monster[i].dying = true;
-                    exp += gp.monster[i].exp;
-                    gp.ui.addMessage("killed the " + gp.monster[i].name + " !");
-                    gp.ui.addMessage("EXP " + gp.monster[i].exp + " !");
+                    gp.monster[gp.currnetMap][i].dying = true;
+                    exp += gp.monster[gp.currnetMap][i].exp;
+                    gp.ui.addMessage("killed the " + gp.monster[gp.currnetMap][i].name + " !");
+                    gp.ui.addMessage("EXP " + gp.monster[gp.currnetMap][i].exp + " !");
                     checkLevelUp();
                 }
             }
@@ -356,13 +362,15 @@ public void restoreLifeAndMana(){
     }
 
     public void damageInteractiveTile(int i) {
-        if (i != 999 && gp.iTile[i].destructible == true && gp.iTile[i].isCorrectItem(this) == true && gp.iTile[i].invincible==false) {
-            gp.iTile[i].playSE();
-            gp.iTile[i].life--;
-            gp.iTile[i].invincible = true;
-            generateParticle(gp.iTile[i],gp.iTile[i]);
-            if (gp.iTile[i].life == 0) {
-                gp.iTile[i] = gp.iTile[i].getDestroyedForm();
+        if (i != 999 && gp.iTile[gp.currnetMap][i].destructible == true &&
+                gp.iTile[gp.currnetMap][i].isCorrectItem(this) == true &&
+                gp.iTile[gp.currnetMap][i].invincible == false) {
+            gp.iTile[gp.currnetMap][i].playSE();
+            gp.iTile[gp.currnetMap][i].life--;
+            gp.iTile[gp.currnetMap][i].invincible = true;
+            generateParticle(gp.iTile[gp.currnetMap][i], gp.iTile[gp.currnetMap][i]);
+            if (gp.iTile[gp.currnetMap][i].life == 0) {
+                gp.iTile[gp.currnetMap][i] = gp.iTile[gp.currnetMap][i].getDestroyedForm();
             }
 
         }
