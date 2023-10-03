@@ -36,8 +36,8 @@ public class GamePanel extends JPanel implements Runnable {
     //World map mapramiters
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    public final int maxMap=10;
-    public int currnetMap=0;
+    public final int maxMap = 10;
+    public int currnetMap = 0;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
     //Full screen
@@ -81,6 +81,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int characterState = 4;
     public final int optionsState = 5;
     public final int gameOverState = 6;
+    public final int transitionState = 7;
+    public final int tradeState=8;
 
 
     public GamePanel() {
@@ -114,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //second resolve
     public void run() {
-        double drawInterwal = 1000000000 / FPS;
+        double drawInterwal = 1000000000 / (FPS);
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -329,7 +331,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void restart() {
         player.setDeflautValues();
-player.setItems();
+        player.setItems();
         aSetter.setObject();
         aSetter.setMonster();
         aSetter.setNPC();

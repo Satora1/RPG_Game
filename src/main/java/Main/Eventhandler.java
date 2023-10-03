@@ -1,8 +1,11 @@
 package Main;
 
 
+import entity.Entity;
+
 public class Eventhandler {
     GamePanel gp;
+    int tempMap, tempCol, tempRow;
     EventRect eventRect[][][];
     boolean canTouchEvent = true;
 
@@ -56,11 +59,21 @@ public class Eventhandler {
             } else if (hit(1, 10, 12, "any") == true) {
                 teleport(0, 37, 22);
             }
+            else if(hit(1,10,6,"up")==true){
+                speak(gp.npc[1][0]);
+            }
         }
         //event happens
 //hut 38/22
 //
         //
+    }
+    public void speak(Entity entity){
+        if(gp.keyH.enterPressed==true){
+            gp.gameState=gp.dialogueState;
+            gp.player.attackCanceled=true;
+            entity.speak();
+        }
     }
 
     public boolean hit(int map, int col, int row, String reqDirection) {
@@ -111,12 +124,13 @@ public class Eventhandler {
     }
 
     public void teleport(int map, int col, int row) {
-        gp.currnetMap = map;
-        gp.player.worldX = gp.tileSize * col;
-        gp.player.worldY = gp.tileSize * row;
-        prevEventX=gp.player.worldX;
-        prevEventY=gp.player.worldY;
-        canTouchEvent=false;
+        gp.gameState = gp.transitionState;
+        tempMap = map;
+        tempCol = col;
+        tempRow = row;
+
+
+        canTouchEvent = false;
         gp.playSE(10);
     }
 

@@ -1,11 +1,13 @@
 package Main;
 
+import entity.NPC_Merchant;
 import entity.NPC_Wizard;
 import monster.MON_Boss;
 import monster.MON_Ork;
 
 import object.*;
 import tile_interactive.IT_DryTree;
+import tile_interactive.IT_House;
 
 
 public class AssetSetter {
@@ -61,9 +63,17 @@ public class AssetSetter {
 
     public void setNPC() {
         int mapNum = 0;
-        gp.npc[mapNum][0] = new NPC_Wizard(gp);
-        gp.npc[mapNum][0].worldX = gp.tileSize * 21;
-        gp.npc[mapNum][0].worldY = gp.tileSize * 21;
+        int i = 0;
+        gp.npc[mapNum][i] = new NPC_Wizard(gp);
+        gp.npc[mapNum][i].worldX = gp.tileSize * 21;
+        gp.npc[mapNum][i].worldY = gp.tileSize * 21;
+        i++;
+        mapNum=1;
+        i=0;
+        gp.npc[mapNum][i] = new NPC_Merchant(gp);
+        gp.npc[mapNum][i].worldX = gp.tileSize * 10;
+        gp.npc[mapNum][i].worldY = gp.tileSize * 6;
+        i++;
     }
 
     public void setMonster() {
@@ -98,6 +108,7 @@ public class AssetSetter {
         gp.iTile[mapNum][i] = new IT_DryTree(gp, 15, 25);
         i++;
         gp.iTile[mapNum][i] = new IT_DryTree(gp, 13, 25);
-
+        i++;
+        gp.iTile[mapNum][i] = new IT_House(gp, 37, 22);
     }
 }

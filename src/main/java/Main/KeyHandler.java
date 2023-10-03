@@ -26,7 +26,9 @@ public class KeyHandler implements KeyListener {
 
         //title state
         if (gp.gameState == gp.titleState) {
+
             titleState(code);
+
         }
         //PLAY STATE
 
@@ -54,10 +56,34 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.gameOverState) {
            gameOverSate(code);
         }
-
+        //Trade STATE
+        else if (gp.gameState == gp.tradeState) {
+            tradeState(code);
+        }
 
     }
+public void tradeState(int code){
+if(code==KeyEvent.VK_ENTER){
+    enterPressed=true;
+}
+if(gp.ui.subState==0){
+    if(code==KeyEvent.VK_W){
+        gp.ui.commandNumber--;
+        if(gp.ui.commandNumber<0){
+            gp.ui.commandNumber=2;
+        }
+        gp.playSE(7);
+    }
+    if(code==KeyEvent.VK_S){
+        gp.ui.commandNumber++;
+        if(gp.ui.commandNumber>2){
+            gp.ui.commandNumber=0;
+        }
+        gp.playSE(7);
+    }
 
+}
+}
     public void optionSate(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
             gp.gameState = gp.playState;

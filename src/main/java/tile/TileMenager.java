@@ -18,7 +18,7 @@ public class TileMenager {
 
     public TileMenager(GamePanel gp) {
         this.gp = gp;
-        tile = new Tile[10];
+        tile = new Tile[20];
         mapTileNumber = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
@@ -37,7 +37,6 @@ public class TileMenager {
         setup(5, "wood", true);
         setup(6, "PIT", false);
         setup(7, "Hflor", false);
-        setup(8, "House", false);
     }
 
     public void setup(int index, String imageName, boolean collision) {
@@ -85,7 +84,7 @@ public class TileMenager {
     }
 
     public void draw(Graphics2D g2) {
-        int worldCol = 0;
+            int worldCol ;
         int worldRow = 0;
 
         while (worldRow < gp.maxWorldRow) {

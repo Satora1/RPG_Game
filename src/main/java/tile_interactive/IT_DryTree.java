@@ -17,6 +17,7 @@ public class IT_DryTree extends InteractiveTile {
         destructible = true;
         life=3;
 
+
     }
 
     public boolean isCorrectItem(Entity entity) {
