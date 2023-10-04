@@ -392,7 +392,7 @@ public class Player extends Entity {
     }
 
     public void selectItem() {
-        int itemIndex = gp.ui.getItemIndexOfSlot();
+        int itemIndex = gp.ui.getItemIndexOfSlot(gp.ui.sloPlayertCol,gp.ui.slotPlayerRow);
         if (itemIndex < inventory.size()) {
             Entity selectedItem = inventory.get(itemIndex);
             if (selectedItem.type == type_sword || selectedItem.type == type_spear) {

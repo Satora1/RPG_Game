@@ -3,6 +3,7 @@ package entity;
 import Main.GamePanel;
 import object.OBJ_HP_Potion;
 import object.OBJ_Key;
+import object.OBJ_Spear;
 
 public class NPC_Merchant extends Entity{
     public NPC_Merchant(GamePanel gp) {
@@ -34,6 +35,7 @@ public class NPC_Merchant extends Entity{
     public void setItems(){
         inventory.add(new OBJ_HP_Potion(gp));
         inventory.add(new OBJ_Key(gp));
+        inventory.add(new OBJ_Spear(gp));
 
     }
     public void speak() {

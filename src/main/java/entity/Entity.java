@@ -76,6 +76,7 @@ public class Entity {
     public int useCost;
     String dialogues[] = new String[20];
     public int value;
+    public int price;
     //TYPE
     public int type;
     public final int type_player = 0;

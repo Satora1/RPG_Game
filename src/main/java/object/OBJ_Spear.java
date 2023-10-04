@@ -14,6 +14,6 @@ public class OBJ_Spear extends Entity {
         attackArea.height=30;
         description="["+name+"]\nAn old wooden spear";
 
-
+price=3;
     }
 }
