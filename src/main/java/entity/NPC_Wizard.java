@@ -10,7 +10,7 @@ public class NPC_Wizard extends Entity {
     public NPC_Wizard(GamePanel gp) {
         super(gp);
         direction = "down";
-        speed = 2;
+        speed =  2;
         getImage();
         setDialogue();
     }
