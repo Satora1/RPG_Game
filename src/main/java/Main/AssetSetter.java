@@ -20,7 +20,7 @@ public class AssetSetter {
 
     public void setObject() {
         int mapNum = 0;
-        int i = 0;
+        int i = 0 ;
         gp.obj[mapNum][i] = new OBJ_CoinVal1(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 28;
         gp.obj[mapNum][i].worldY = gp.tileSize * 25;
