@@ -1,5 +1,6 @@
 package Main;
 
+import AI.PathFinder;
 import entity.Entity;
 import entity.Player;
 import tile.TileMenager;
@@ -49,9 +50,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     //System
-    TileMenager tileM = new TileMenager(this);
+    public TileMenager tileM = new TileMenager(this);
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
+    public PathFinder pathFinder=new PathFinder(this);
     Sound soundEffect = new Sound();
     Config config = new Config(this);
 
@@ -283,8 +285,8 @@ public class GamePanel extends JPanel implements Runnable {
             long passed = drawEnd - drawStart;
             g2.setColor(Color.white);
             g2.drawString("draw time " + passed, 10, 400);
-            g2.drawString("X " + player.worldX, 10, 350);
-            g2.drawString("Y" + player.worldY, 10, 300);
+            g2.drawString("X " + (player.worldX)/tileSize, 10, 350);
+            g2.drawString("Y " + (player.worldY)/tileSize, 10, 300);
             System.out.println("draw time" + passed);
 
         }
