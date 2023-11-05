@@ -15,5 +15,6 @@ public class OBJ_Spear extends Entity {
         description="["+name+"]\nAn old wooden spear";
 
 price=3;
+        knockBackPower=10;
     }
 }

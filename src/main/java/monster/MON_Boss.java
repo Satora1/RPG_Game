@@ -67,7 +67,12 @@ public class MON_Boss extends Entity {
         int i = new Random().nextInt(100) + 1;
         if (i > 99 && projectile.alive == false && shotAvilableCounter == 30) {
             projectile.set(worldX, worldY, direction, true, this);
-            gp.projectileList.add(projectile);
+            for (int j=0;j<gp.projectile[j].length;j++){
+                if(gp.projectile[gp.currnetMap][j]==null){
+                    gp.projectile[gp.currnetMap][j]=projectile;
+                    break;
+                }
+            }
             shotAvilableCounter = 0;
         }
     }

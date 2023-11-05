@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
     public TileMenager tileM = new TileMenager(this);
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
-    public PathFinder pathFinder=new PathFinder(this);
+    public PathFinder pathFinder = new PathFinder(this);
     Sound soundEffect = new Sound();
     Config config = new Config(this);
 
@@ -71,9 +71,10 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity monster[][] = new Entity[maxMap][20];
 
     public InteractiveTile iTile[][] = new InteractiveTile[maxMap][50];
+    public Entity projectile[][] = new Entity[maxMap][20];
     public ArrayList<Entity> particleList = new ArrayList<>();
     ArrayList<Entity> entitiesList = new ArrayList<>();
-    public ArrayList<Entity> projectileList = new ArrayList<>();
+    // public ArrayList<Entity> projectileList = new ArrayList<>();
     //GAME STATE
     public int gameState;
     public final int playState = 1;
@@ -84,7 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int optionsState = 5;
     public final int gameOverState = 6;
     public final int transitionState = 7;
-    public final int tradeState=8;
+    public final int tradeState = 8;
 
 
     public GamePanel() {
@@ -177,13 +178,13 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
 
-            for (int i = 0; i < projectileList.size(); i++) {
-                if (projectileList.get(i) != null) {
-                    if (projectileList.get(i).alive == true) {
-                        projectileList.get(i).update();
+            for (int i = 0; i < projectile[1].length; i++) {
+                if (projectile[currnetMap][i] != null) {
+                    if (projectile[currnetMap][i].alive == true) {
+                        projectile[currnetMap][i].update();
                     }
-                    if (projectileList.get(i).alive != true) {
-                        projectileList.remove(i);
+                    if (projectile[currnetMap][i].alive != true) {
+                        projectile[currnetMap][i] = null;
                     }
 
                 }
@@ -250,9 +251,9 @@ public class GamePanel extends JPanel implements Runnable {
                     entitiesList.add(monster[currnetMap][i]);
                 }
             }
-            for (int i = 0; i < projectileList.size(); i++) {
-                if (projectileList.get(i) != null) {
-                    entitiesList.add(projectileList.get(i));
+            for (int i = 0; i < projectile[1].length; i++) {
+                if (projectile[currnetMap][i] != null) {
+                    entitiesList.add(projectile[currnetMap][i]);
                 }
             }
             for (int i = 0; i < particleList.size(); i++) {
@@ -285,8 +286,8 @@ public class GamePanel extends JPanel implements Runnable {
             long passed = drawEnd - drawStart;
             g2.setColor(Color.white);
             g2.drawString("draw time " + passed, 10, 400);
-            g2.drawString("X " + (player.worldX)/tileSize, 10, 350);
-            g2.drawString("Y " + (player.worldY)/tileSize, 10, 300);
+            g2.drawString("X " + (player.worldX) / tileSize, 10, 350);
+            g2.drawString("Y " + (player.worldY) / tileSize, 10, 300);
             System.out.println("draw time" + passed);
 
         }

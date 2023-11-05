@@ -26,30 +26,32 @@ public class Entity {
     //STATE
     public int worldX, worldY;
     public String direction = "down";
-    public int spritNum = 1;
-    public int dialogueIndex = 0;
+
     public boolean collisionOn = false;
     public boolean invincible = false;
+    public boolean knockBack = false;
     public boolean attacking = false;
     public boolean alive = true;
     public boolean onPath = false;
     public boolean dying = false;
+    boolean hpBarOn = false;
+    //counters
     public int shotAvilableCounter = 0;
     public int dyingCounter = 0;
-    boolean hpBarOn = false;
+    public int knockBackCounter = 0;
     int hpBarCounter = 0;
-
-
+    public int spritNum = 1;
+    public int dialogueIndex = 0;
+    public int actionLockCounter = 0;
+    public int invincibleCounter = 0;
     public int solidAreaDefaultX, solidAreaDefaultY;
 
-    public int actionLockCounter = 0;
 
-
-    public int invincibleCounter = 0;
     public BufferedImage image, image2, image3;
     public String name;
     public boolean collision = false;
     //character status
+    public int defaultSpeed;
     public int level;
     public int strength;
     public int dextery;
@@ -78,6 +80,7 @@ public class Entity {
     String dialogues[] = new String[20];
     public int value;
     public int price;
+    public int knockBackPower = 0;
     //TYPE
     public int type;
     public final int type_player = 0;
@@ -140,10 +143,10 @@ public class Entity {
         Particle p2 = new Particle(gp, target, color, size, speed, maxLife, 2, -1);
         Particle p3 = new Particle(gp, target, color, size, speed, maxLife, -2, 1);
         Particle p4 = new Particle(gp, target, color, size, speed, maxLife, 2, 1);
-        gp.projectileList.add(p1);
-        gp.projectileList.add(p2);
-        gp.projectileList.add(p3);
-        gp.projectileList.add(p4);
+        gp.particleList.add(p1);
+        gp.particleList.add(p2);
+        gp.particleList.add(p3);
+        gp.particleList.add(p4);
     }
 
     public void damageReaction() {
@@ -172,25 +175,57 @@ public class Entity {
     }
 
     public void update() {
-        setAction();
-        checkCollision();
-        //if colison false can move
-        if (collisionOn == false) {
-            switch (direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
+        if (knockBack == true) {
+            checkCollision();
+            if (collisionOn == true) {
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = defaultSpeed;
+            } else if (collisionOn == false) {
+                switch (gp.player.direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
+            }
+            knockBackCounter++;
+            if (knockBackCounter == 10) {
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = defaultSpeed;
+            }
+        } else {
+            setAction();
+            checkCollision();
+            //if colison false can move
+            if (collisionOn == false) {
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
             }
         }
+
+
         spriteCounter++;
         if (spriteCounter > 15) {
             if (spritNum == 1) {
@@ -407,6 +442,7 @@ public class Entity {
 //            }
         }
     }
+
     public void checkCollision() {
         collisionOn = false;
         gp.checker.checkerTile(this);

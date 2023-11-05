@@ -17,7 +17,8 @@ public class MON_Ork extends Entity {
         this.gp = gp;
         type = type_monster;
         name = "Green Ork";
-        speed = 3 / 2;
+        defaultSpeed=1;
+        speed =defaultSpeed;
         maxLife = 4;
         life = maxLife;
         attack = 5;
@@ -68,9 +69,15 @@ public class MON_Ork extends Entity {
     public void setAction() {
         if (onPath == true) {
             int i = new Random().nextInt(100) + 1;
-            if (i > 197 && projectile.alive == false && shotAvilableCounter == 30) {
+            if (i > 150 && projectile.alive == false && shotAvilableCounter == 30) {
                 projectile.set(worldX, worldY, direction, true, this);
-                gp.projectileList.add(projectile);
+              //  gp.projectileList.add(projectile);
+                for (int j=0;j<gp.projectile[j].length;j++){
+                    if(gp.projectile[gp.currnetMap][j]==null){
+                        gp.projectile[gp.currnetMap][j]=projectile;
+                        break;
+                    }
+                }
                 shotAvilableCounter = 0;
             }
             int goalCol = (gp.player.worldX + gp.player.solidArea.x) / gp.tileSize;
