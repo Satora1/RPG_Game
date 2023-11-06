@@ -91,12 +91,41 @@ public class Entity {
     public final int type_shield = 5;
     public final int type_consumable = 6;
     public final int type_pickupOnly = 7;
+    public final int type_obstacle = 8;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
 
+    public int getLeftX() {
+        return worldX + solidArea.x;
+    }
+
+    public int getRightX() {
+        return worldX + solidArea.x + solidArea.width;
+    }
+
+    public int getTopY() {
+        return worldY + solidArea.y;
+    }
+
+    public int getBottomY() {
+        return worldY + solidArea.y + solidArea.height;
+    }
+
+    public int getCol() {
+        return (worldX + solidArea.x) / gp.tileSize;
+    }
+
+    public int getRow() {
+        return (worldY + solidArea.y) / gp.tileSize;
+    }
+
     public void setAction() {
+    }
+
+    public void interact() {
+
     }
 
     public void checkDrop() {
@@ -171,7 +200,7 @@ public class Entity {
 
     }
 
-    public void use(Entity entity) {
+    public boolean use(Entity entity) {return false;
     }
 
     public void update() {
@@ -454,6 +483,40 @@ public class Entity {
         if (this.type == type_monster && contactPlayer == true) {
             damagePlayer(attack);
         }
+    }
+
+    public int getDetected(Entity user, Entity target[][], String targetName) {
+        int index = 999;
+        //check suranding obj
+        int nextWorldX = user.getLeftX();
+        int nextWorldY = user.getTopY();
+        switch (user.direction) {
+            case "up":
+                nextWorldY = user.getTopY() - 2;
+                break;
+            case "down":
+                nextWorldY = user.getBottomY() + 2;
+                break;
+            case "left":
+                nextWorldX = user.getLeftX() - 2;
+                break;
+            case "right":
+                nextWorldX = user.getRightX() + 2;
+                break;
+        }
+        int col = nextWorldX / gp.tileSize;
+        int row = nextWorldY / gp.tileSize;
+        for (int i = 0; i < target[1].length; i++) {
+            if (target[gp.currnetMap][i] != null) {
+                if (target[gp.currnetMap][i].getCol() == col &&
+                        target[gp.currnetMap][i].getRow() == row &&
+                        target[gp.currnetMap][i].name.equals(targetName)) {
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
     }
 
 }

@@ -17,9 +17,9 @@ public class OBJ_ManaCrystal extends Entity {
         image2 = setup("/playerMP/empty_mana", gp.tileSize, gp.tileSize);
     }
 
-    public void use(Entity entity) {
+    public boolean use(Entity entity) {
         gp.ui.addMessage("Mana " + value);
         entity.mana += value;
-
+        return true;
     }
 }

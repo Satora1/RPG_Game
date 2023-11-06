@@ -268,7 +268,7 @@ public class Player extends Entity {
             solidArea.height = attackArea.height;
             //Check monster colision with update worldX,worldY and solid Area
             int monsterIndex = gp.checker.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex, attack,currentWepon.knockBackPower);
+            damageMonster(monsterIndex, attack, currentWepon.knockBackPower);
 
             int iTileIndex = gp.checker.checkEntity(this, gp.iTile);
             damageInteractiveTile(iTileIndex);
@@ -297,6 +297,13 @@ public class Player extends Entity {
             if (gp.obj[gp.currnetMap][i].type == type_pickupOnly) {
                 gp.obj[gp.currnetMap][i].use(this);
                 gp.obj[gp.currnetMap][i] = null;
+            }
+            //OBSTACLE
+            else if (gp.obj[gp.currnetMap][i].type == type_obstacle) {
+                if (keyH.enterPressed == true) {
+                    attackCanceled = true;
+                    gp.obj[gp.currnetMap][i].interact();
+                }
             }
             //INVENTORY ITEMS
             else {
@@ -344,12 +351,12 @@ public class Player extends Entity {
 
     }
 
-    public void damageMonster(int i, int attack,int knockBackPower) {
+    public void damageMonster(int i, int attack, int knockBackPower) {
         if (i != 999) {
             if (gp.monster[gp.currnetMap][i].invincible == false) {
                 gp.playSE(3);
-                if(knockBackPower>0){
-                    knockBack(gp.monster[gp.currnetMap][i],knockBackPower);
+                if (knockBackPower > 0) {
+                    knockBack(gp.monster[gp.currnetMap][i], knockBackPower);
                 }
 
                 int damage = attack - gp.monster[gp.currnetMap][i].defense;
@@ -420,8 +427,9 @@ public class Player extends Entity {
                 defense = getDefense();
             }
             if (selectedItem.type == type_consumable) {
-                selectedItem.use(this);
-                inventory.remove(itemIndex);
+                if (selectedItem.use(this) == true) {
+                    inventory.remove(itemIndex);
+                }
             }
         }
     }
@@ -528,9 +536,10 @@ public class Player extends Entity {
             generateParticle(projectile, projectile);
         }
     }
-    public void knockBack(Entity entity,int knockBackPower){
-entity.direction=direction;
-entity.speed+=knockBackPower;
-entity.knockBack=true;
+
+    public void knockBack(Entity entity, int knockBackPower) {
+        entity.direction = direction;
+        entity.speed += knockBackPower;
+        entity.knockBack = true;
     }
 }

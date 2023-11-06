@@ -25,6 +25,14 @@ public class AssetSetter {
         gp.obj[mapNum][i].worldX = gp.tileSize * 28;
         gp.obj[mapNum][i].worldY = gp.tileSize * 25;
         i++;
+        gp.obj[mapNum][i] = new OBJ_Door(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 17;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 25;
+        i++;
+        gp.obj[mapNum][i] = new OBJ_Door(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 29;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 25;
+        i++;
         gp.obj[mapNum][i] = new OBJ_CoinVal1(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 28;
         gp.obj[mapNum][i].worldY = gp.tileSize * 23;
@@ -47,6 +55,10 @@ public class AssetSetter {
         i++;
         gp.obj[mapNum][i] = new OBJ_Heart(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 24;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 25;
+        i++;
+        gp.obj[mapNum][i] = new OBJ_Chest(gp,new OBJ_Key(gp));
+        gp.obj[mapNum][i].worldX = gp.tileSize * 41;
         gp.obj[mapNum][i].worldY = gp.tileSize * 25;
 
         //for difrent ma do
@@ -87,9 +99,9 @@ public class AssetSetter {
         gp.monster[mapNum][i].worldX = gp.tileSize * 25;
         gp.monster[mapNum][i].worldY = gp.tileSize * 32;
         i++;
-        gp.monster[mapNum][i] = new MON_Boss(gp);
-        gp.monster[mapNum][i].worldX = gp.tileSize * 26;
-        gp.monster[mapNum][i].worldY = gp.tileSize * 32;
+//        gp.monster[mapNum][i] = new MON_Boss(gp);
+//        gp.monster[mapNum][i].worldX = gp.tileSize * 26;
+//        gp.monster[mapNum][i].worldY = gp.tileSize * 32;
     }
 
     public void setInteractiveTile() {
