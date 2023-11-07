@@ -154,6 +154,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public void update() {
+        //dont know why its work only that way , the background now is blac ,
+        // no bugs after getting to border
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0, 0, getWidth(), getHeight());
         if (gameState == playState) {
             //PLAYER
             player.update();
