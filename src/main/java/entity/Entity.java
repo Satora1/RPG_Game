@@ -74,6 +74,8 @@ public class Entity {
     public ArrayList<Entity> inventory = new ArrayList<>();
     public final int maxInventorySize = 20;
     public int attackValue;
+    public boolean stackable = false;
+    public int amount = 1;
     public int defenseValue;
     public String description = " ";
     public int useCost;
@@ -200,7 +202,8 @@ public class Entity {
 
     }
 
-    public boolean use(Entity entity) {return false;
+    public boolean use(Entity entity) {
+        return false;
     }
 
     public void update() {

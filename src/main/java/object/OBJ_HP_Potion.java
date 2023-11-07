@@ -15,6 +15,7 @@ public class OBJ_HP_Potion extends Entity {
         down1=setup("/objects/potionHP",gp.tileSize,gp.tileSize);
         description="["+name+"]\nAn old mighty healing\n potion";
         price=2;
+        stackable=true;
     }
     public boolean use(Entity entity){
         gp.gameState=gp.dialogueState;

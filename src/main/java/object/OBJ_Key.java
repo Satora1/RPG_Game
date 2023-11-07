@@ -15,6 +15,7 @@ public class OBJ_Key extends Entity {
         down1=setup("/objects/key",gp.tileSize,gp.tileSize);
         description="["+name+"]\nAn old Key";
         price=3;
+        stackable=true;
     }
     public boolean use(Entity entity){
         gp.gameState=gp.dialogueState;

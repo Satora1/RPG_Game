@@ -46,8 +46,16 @@ public class AssetSetter {
         gp.obj[mapNum][i].worldY = gp.tileSize * 22;
         i++;
         gp.obj[mapNum][i] = new OBJ_HP_Potion(gp);
-        gp.obj[mapNum][i].worldX = gp.tileSize * 24;
-        gp.obj[mapNum][i].worldY = gp.tileSize * 21;
+        gp.obj[mapNum][i].worldX = gp.tileSize * 23;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 22;
+        i++;
+        gp.obj[mapNum][i] = new OBJ_HP_Potion(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 22;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 22;
+        i++;
+        gp.obj[mapNum][i] = new OBJ_HP_Potion(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 21;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 22;
         i++;
         gp.obj[mapNum][i] = new OBJ_ManaCrystal(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 24;
