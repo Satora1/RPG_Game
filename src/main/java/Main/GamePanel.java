@@ -212,6 +212,7 @@ public class GamePanel extends JPanel implements Runnable {
                     iTile[currnetMap][i].update();
                 }
             }
+            eMenager.update();
         }
         if (gameState == pauseGame) {
             //nothing when pause

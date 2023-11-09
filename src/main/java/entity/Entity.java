@@ -62,6 +62,7 @@ public class Entity {
     public int coin;
     public Entity currentWepon;
     public Entity currentShieald;
+    public Entity currentLight;
     public int maxLife;
     public int life;
     public int maxMana;
@@ -77,6 +78,8 @@ public class Entity {
     public boolean stackable = false;
     public int amount = 1;
     public int defenseValue;
+
+    public int lightRadius;
     public String description = " ";
     public int useCost;
     String dialogues[] = new String[20];
@@ -94,6 +97,7 @@ public class Entity {
     public final int type_consumable = 6;
     public final int type_pickupOnly = 7;
     public final int type_obstacle = 8;
+    public final int type_light = 9;
 
     public Entity(GamePanel gp) {
         this.gp = gp;

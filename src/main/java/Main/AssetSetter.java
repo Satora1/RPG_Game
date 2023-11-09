@@ -68,6 +68,11 @@ public class AssetSetter {
         gp.obj[mapNum][i] = new OBJ_Chest(gp,new OBJ_Key(gp));
         gp.obj[mapNum][i].worldX = gp.tileSize * 41;
         gp.obj[mapNum][i].worldY = gp.tileSize * 25;
+        i++;
+        gp.obj[mapNum][i] = new Obj_Lantern(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 27;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 25;
+
 
         //for difrent ma do
         //mapNum=1... and same as up

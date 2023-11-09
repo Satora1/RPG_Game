@@ -11,7 +11,10 @@ public class EnviromentMenager {
         this.gp=gp;
     }
     public void setup(){
-        light =new Light(gp,450);
+        light =new Light(gp);
+    }
+    public void update(){
+        light.update();
     }
     public void draw(Graphics2D g2){
         light.draw(g2);
