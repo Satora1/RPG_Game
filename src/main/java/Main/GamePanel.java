@@ -1,6 +1,7 @@
 package Main;
 
 import AI.PathFinder;
+import Enviroment.EnviromentMenager;
 import entity.Entity;
 import entity.Player;
 import tile.TileMenager;
@@ -54,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     public PathFinder pathFinder = new PathFinder(this);
+    EnviromentMenager eMenager = new EnviromentMenager(this);
     Sound soundEffect = new Sound();
     Config config = new Config(this);
 
@@ -101,6 +103,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setMonster();
         aSetter.setNPC();
         aSetter.setInteractiveTile();
+        eMenager.setup();
 
         // playMusic(0);
         gameState = titleState;
@@ -279,6 +282,8 @@ public class GamePanel extends JPanel implements Runnable {
             }
 //Empty entities list
             entitiesList.clear();
+            //EnviromentMenager
+            eMenager.draw(g2);
 //UI
             ui.draw(g2);
         }
