@@ -99,6 +99,10 @@ public class UI {
         if (gp.gameState == gp.tradeState) {
             drawTradeScreen();
         }
+        //sleep state
+        if (gp.gameState == gp.sleepState) {
+            drawSleepScreen();
+        }
     }
 
     public void drawTradeScreen() {
@@ -613,8 +617,8 @@ public class UI {
 
             //Equip cursor
             if (entity.inventory.get(i) == entity.currentWepon ||
-                    entity.inventory.get(i) == entity.currentShieald||
-            entity.inventory.get(i)==entity.currentLight) {
+                    entity.inventory.get(i) == entity.currentShieald ||
+                    entity.inventory.get(i) == entity.currentLight) {
                 g2.setColor(new Color(240, 190, 90));
                 g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10, 10);
             }
@@ -903,6 +907,28 @@ public class UI {
         g2.drawString(text, X, Y);
         if (commandNumber == 1) {
             g2.drawString(">", X - 40, Y);
+        }
+
+    }
+
+    public void drawSleepScreen() {
+        counter++;
+        if (counter < 120) {
+            gp.eMenager.light.filterAlpha += 0.01f;
+            if (gp.eMenager.light.filterAlpha > 1f) {
+                gp.eMenager.light.filterAlpha = 1f;
+            }
+        }
+        if (counter >= 120) {
+            gp.eMenager.light.filterAlpha -= 0.01f;
+            if (gp.eMenager.light.filterAlpha <= 0f) {
+                gp.eMenager.light.filterAlpha = 0f;
+                counter = 0;
+                gp.eMenager.light.dayState = gp.eMenager.light.day;
+                gp.eMenager.light.dayCounter=0;
+                gp.gameState = gp.playState;
+                gp.player.getPlayerImage();
+            }
         }
 
     }

@@ -72,7 +72,10 @@ public class AssetSetter {
         gp.obj[mapNum][i] = new Obj_Lantern(gp);
         gp.obj[mapNum][i].worldX = gp.tileSize * 27;
         gp.obj[mapNum][i].worldY = gp.tileSize * 25;
-
+        i++;
+        gp.obj[mapNum][i] = new OBJ_Tent(gp);
+        gp.obj[mapNum][i].worldX = gp.tileSize * 26;
+        gp.obj[mapNum][i].worldY = gp.tileSize * 25;
 
         //for difrent ma do
         //mapNum=1... and same as up
