@@ -15,7 +15,7 @@ public class UI {
     Graphics2D g2;
 
     GamePanel gp;
-    Font arial_40, arial_70B;
+  public   Font arial_40, arial_70B;
 
     public boolean messageOn = false;
     ArrayList<String> message = new ArrayList<>();

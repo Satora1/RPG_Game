@@ -29,15 +29,20 @@ public class TileMenager {
 
     public void getTileImage() {
 
-
+        setup(4, "earth", false);
         setup(0, "grass", false);
+        setup(7, "Hflor", false);
+        setup(6, "PIT", false);
+        setup(3, "sand", false);
         setup(1, "wall", true);
         setup(2, "water", true);
-        setup(3, "sand", false);
-        setup(4, "earth", false);
         setup(5, "wood", true);
-        setup(6, "PIT", false);
-        setup(7, "Hflor", false);
+
+
+
+
+
+
     }
 
     public void setup(int index, String imageName, boolean collision) {

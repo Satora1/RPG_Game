@@ -4,6 +4,7 @@ import AI.PathFinder;
 import Enviroment.EnviromentMenager;
 import entity.Entity;
 import entity.Player;
+import tile.Map;
 import tile.TileMenager;
 import tile_interactive.InteractiveTile;
 
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
 
 public class GamePanel extends JPanel implements Runnable {
     //screen settings
@@ -51,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     //System
+   Map map =new Map(this);
     public TileMenager tileM = new TileMenager(this);
     public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
@@ -61,6 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public UI ui = new UI(this);
     public Eventhandler eHandler = new Eventhandler(this);
+
     Thread gameThread;
     public CollisonChecker checker = new CollisonChecker(this);
 
@@ -73,9 +77,11 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity monster[][] = new Entity[maxMap][20];
 
     public InteractiveTile iTile[][] = new InteractiveTile[maxMap][50];
+
     public Entity projectile[][] = new Entity[maxMap][20];
     public ArrayList<Entity> particleList = new ArrayList<>();
     ArrayList<Entity> entitiesList = new ArrayList<>();
+
     // public ArrayList<Entity> projectileList = new ArrayList<>();
     //GAME STATE
     public int gameState;
@@ -90,6 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int tradeState = 8;
 
     public final int sleepState = 9;
+    public final int mapState = 10;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -232,6 +239,10 @@ public class GamePanel extends JPanel implements Runnable {
         if (gameState == titleState) {
             ui.draw(g2);
         }
+        //Map screen
+        else if (gameState == mapState) {
+            map.drawFullMapScreen(g2);
+        }
         //OTHERS
         else {//TILE
             tileM.draw(g2);
@@ -286,6 +297,9 @@ public class GamePanel extends JPanel implements Runnable {
             entitiesList.clear();
             //EnviromentMenager
             eMenager.draw(g2);
+            // minimap
+            map.drawMiniMap(g2);
+
 //UI
             ui.draw(g2);
         }
