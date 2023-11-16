@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class TileMenager {
     GamePanel gp;
@@ -16,32 +17,63 @@ public class TileMenager {
 
     public int mapTileNumber[][][];
     public boolean drawPath = true;
+    ArrayList<String> fileNames = new ArrayList<>();
+    ArrayList<String> collisonStatus = new ArrayList<>();
 
     public TileMenager(GamePanel gp) {
         this.gp = gp;
-        tile = new Tile[20];
-        mapTileNumber = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
+        //read tile data file
+        InputStream is = getClass().getResourceAsStream("/maps/tileData");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        //geting  tile name  and collision  info from file
+        String line;
+        try {
+            while ((line = br.readLine()) != null) {
+                fileNames.add(line);
+                collisonStatus.add(br.readLine());
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        tile = new Tile[fileNames.size()];
         getTileImage();
-        loadMap("/maps/map.txt",0);
-        loadMap("/maps/mapHouse.txt",1);
+
+
+        //get max col and row
+        is = getClass().getResourceAsStream("/maps/Main.map");
+        br = new BufferedReader(new InputStreamReader(is));
+        try {
+            String line2 = br.readLine();
+            String maxTile[] = line2.split(" ");
+            gp.maxWorldCol = maxTile.length;
+            gp.maxWorldRow = maxTile.length;
+            mapTileNumber = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow];
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Exp");
+        }
+loadMap("/maps/Main.map",0);
+
+      //  loadMap("/maps/map.txt", 0);
+        loadMap("/maps/shop", 1);
     }
 
     public void getTileImage() {
-
-        setup(4, "earth", false);
-        setup(0, "grass", false);
-        setup(7, "Hflor", false);
-        setup(6, "PIT", false);
-        setup(3, "sand", false);
-        setup(1, "wall", true);
-        setup(2, "water", true);
-        setup(5, "wood", true);
-
-
-
-
-
+        for (int i = 0; i < fileNames.size(); i++) {
+            String fileName;
+            boolean collision;
+            //get file name
+            fileName = fileNames.get(i);
+            //get colssion status
+            if (collisonStatus.get(i).equals("true")) {
+                collision = true;
+            } else {
+                collision = false;
+            }
+            setup(i, fileName, collision);
+        }
 
     }
 
@@ -49,7 +81,7 @@ public class TileMenager {
         UtilityTool uTool = new UtilityTool();
         try {
             tile[index] = new Tile();
-            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName));
             tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
             tile[index].collision = collision;
         } catch (IOException e) {
@@ -57,7 +89,7 @@ public class TileMenager {
         }
     }
 
-    public void loadMap(String filePath,int map) {
+    public void loadMap(String filePath, int map) {
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -90,7 +122,7 @@ public class TileMenager {
     }
 
     public void draw(Graphics2D g2) {
-            int worldCol ;
+        int worldCol;
         int worldRow = 0;
 
         while (worldRow < gp.maxWorldRow) {
@@ -120,7 +152,7 @@ public class TileMenager {
                 int worldY = gp.pathFinder.pathList.get(i).row * gp.tileSize;
                 int screenX = worldX - gp.player.worldX + gp.player.screenX;
                 int screenY = worldY - gp.player.worldY + gp.player.screenY;
-                g2.fillRect(screenX,screenY,gp.tileSize,gp.tileSize);
+                g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
             }
         }
     }

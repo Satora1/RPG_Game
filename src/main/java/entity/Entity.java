@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Entity {
     GamePanel gp;
@@ -130,6 +131,31 @@ public class Entity {
     public void setAction() {
     }
 
+    public int getXDistance(Entity target) {
+        int xDistance = Math.abs(worldX - target.worldX);
+        return xDistance;
+    }
+
+    public int getYDistance(Entity target) {
+        int yDistance = Math.abs(worldY - target.worldY);
+        return yDistance;
+    }
+
+    public int getTileDistance(Entity target) {
+        int tileDistance = (getXDistance(target) + getYDistance(target)) / gp.tileSize;
+        return tileDistance;
+    }
+
+    public int getGoalCol(Entity target) {
+        int goalCol = (target.worldX + target.solidArea.x) / gp.tileSize;
+        return goalCol;
+    }
+
+    public int getGoalRow(Entity target) {
+        int goalRow = (target.worldY + target.solidArea.y) / gp.tileSize;
+        return goalRow;
+    }
+
     public void interact() {
 
     }
@@ -208,6 +234,61 @@ public class Entity {
 
     public boolean use(Entity entity) {
         return false;
+    }
+
+    public void checkStopChasing(Entity target, int distance, int rate) {
+        if (getTileDistance(target) > distance) {
+            int i = new Random().nextInt(rate);
+            if (i == 0) {
+                onPath = false;
+            }
+        }
+
+    }
+
+    public void checkStaartChasing(Entity target, int distance, int rate) {
+        if (getTileDistance(target) < distance) {
+            int i = new Random().nextInt(rate);
+            if (i == 0) {
+                onPath = true;
+            }
+        }
+
+    }
+
+    public void shootOrNot(int rate, int shotInterval) {
+        int i = new Random().nextInt(rate);
+        if (i == 0 && projectile.alive == false && shotAvilableCounter == shotInterval) {
+            projectile.set(worldX, worldY, direction, true, this);
+            //  gp.projectileList.add(projectile);
+            for (int j = 0; j < gp.projectile[j].length; j++) {
+                if (gp.projectile[gp.currnetMap][j] == null) {
+                    gp.projectile[gp.currnetMap][j] = projectile;
+                    break;
+                }
+            }
+            shotAvilableCounter = 0;
+        }
+    }
+    public void getRandomDirection(){
+        actionLockCounter++;
+        if (actionLockCounter == 120) {
+            Random random = new Random();
+            int i = random.nextInt(100) + 1;//pick up a numer from 1-100
+            if (i <= 25) {
+                direction = "up";
+            }
+            if (i > 25 && i <= 50) {
+                direction = "down";
+            }
+            if (i > 50 && i <= 75) {
+                direction = "left";
+            }
+            if (i > 75 && i <= 100) {
+                direction = "right";
+            }
+            actionLockCounter = 0;
+        }
     }
 
     public void update() {

@@ -36,6 +36,7 @@ public class Map extends TileMenager {
                     row++;
                 }
             }
+            g2.dispose();
         }
     }
 
@@ -80,4 +81,5 @@ public class Map extends TileMenager {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
         }
     }
+
 }
