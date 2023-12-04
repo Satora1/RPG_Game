@@ -1,5 +1,7 @@
 # RPG_Game
 This is my personal 2D RPG game, where every element has been crafted entirely by me using Java. From the storyline to the graphics, the entire gaming experience reflects my passion and dedication to game development in the Java language
+# Ovner
+-Jakub Satora
 ## Technologies Used:
 -Java
 ## Getting Started:
